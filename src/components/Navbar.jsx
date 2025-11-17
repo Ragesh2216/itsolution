@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Logo from "../images/Logo.png";
+import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 import ArchiveDop from "./ArchiveDop.jsx";
 
@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="z-50">
           <Link to="/" className="hover:opacity-80 transition-opacity duration-200">
-            <img src={Logo} width={130} alt="Site Logo" />
+            <img src={logo} width={130} alt="Site Logo" />
           </Link>
         </div>
 
