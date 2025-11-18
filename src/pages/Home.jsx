@@ -107,64 +107,358 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-green to-red-1000">
-      {/* Hero Section */}
-<section className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-  {/* Background Image */}
+     {/* Hero Section */}
+<section className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+  {/* Enhanced Background Image with Animations */}
   <div className="absolute inset-0">
-    <img 
-      src="hero.png" 
-      alt="stackly" 
-      className="w-full h-full object-cover object-center"
+    <img
+      src="hero.png"
+      alt="stackly"
+      className="w-full h-full object-cover object-center scale-110 animate-parallax-slow"
     />
+    {/* Multi-layer Gradient Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-blue-500/15 to-cyan-400/10 animate-gradient-shift"></div>
+    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-gray-900/20"></div>
   </div>
-  
-  {/* Background Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 via-white/80 to-blue-50/80"></div>
 
-  <div className="max-w-7xl mx-auto text-center relative z-10">
-    <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-      <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-6 animate-pulse">
-        For millions of users
-      </span>
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-        Stackly Powerful Digital<br />
-        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          IT solutions Company
-        </span>
-      </h1>
-      <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-        Affixed pretend account ten natural. Need eat week even yet that. Incommode delighted he resolving sportsmen do in listening.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-bounce-slow">
-          Get started
-        </button>
-      </div>
+  {/* Animated Background Elements */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Floating Gradient Orbs */}
+    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-float-orb-1"></div>
+    <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full blur-3xl animate-float-orb-2"></div>
+    <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-green-400/20 to-teal-500/20 rounded-full blur-3xl animate-float-orb-3"></div>
+    
+    {/* Animated Grid Pattern */}
+    <div className="absolute inset-0 opacity-5">
+      <div className="grid-pattern-animated"></div>
     </div>
-  </div>
 
-  {/* Floating elements */}
-  <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
-    {[...Array(20)].map((_, i) => (
+    {/* Colorful Floating Particles */}
+    {[...Array(25)].map((_, i) => (
       <div
         key={i}
-        className="absolute rounded-full animate-float-slow opacity-10"
+        className="absolute rounded-full animate-particle-float"
+        style={{
+          width: `${Math.random() * 8 + 4}px`,
+          height: `${Math.random() * 8 + 4}px`,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          backgroundColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'][Math.floor(Math.random() * 6)],
+          opacity: Math.random() * 0.3 + 0.1,
+          animationDelay: `${Math.random() * 20}s`,
+          animationDuration: `${Math.random() * 25 + 15}s`
+        }}
+      />
+    ))}
+
+    {/* Geometric Shapes */}
+    {[...Array(12)].map((_, i) => (
+      <div
+        key={`shape-${i}`}
+        className={`absolute animate-geometric-float-${i % 3}`}
         style={{
           width: `${Math.random() * 100 + 50}px`,
           height: `${Math.random() * 100 + 50}px`,
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
-          background: `radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(147,51,234,0.1) 100%)`,
-          animationDelay: `${Math.random() * 5}s`,
-          animationDuration: `${Math.random() * 20 + 10}s`
+          background: `linear-gradient(135deg, ${
+            ['#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981'][Math.floor(Math.random() * 5)]
+          }15, ${
+            ['#6366F1', '#D946EF', '#F97316', '#84CC16', '#06B6D4'][Math.floor(Math.random() * 5)]
+          }15)`,
+          borderRadius: i % 3 === 0 ? '50%' : i % 3 === 1 ? '30%' : '10%',
+          transform: `rotate(${Math.random() * 360}deg)`,
+          animationDelay: `${Math.random() * 10}s`
         }}
       />
     ))}
   </div>
+
+  <div className="max-w-7xl mx-auto text-center relative z-10">
+    <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      
+      {/* Animated Badge */}
+     
+
+      {/* Animated Main Heading */}
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight drop-shadow-2xl">
+        <span className="block animate-slide-in-up">
+          Stackly Powerful
+        </span>
+        <span className="block mt-4">
+          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-gradient-flow">
+            Digital IT Solutions
+          </span>
+        </span>
+      </h1>
+
+      {/* Animated Description */}
+      <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in-up delay-300 drop-shadow-lg">
+        Transforming businesses with cutting-edge technology solutions. 
+        <span className="block mt-3 text-white/60 text-lg">
+          Innovation meets excellence in every project we deliver.
+        </span>
+      </p>
+
+      {/* Enhanced CTA Buttons */}
+      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up delay-500">
+        <Link
+          to="/contact"
+          className="group relative bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 py-5 rounded-2xl font-bold text-lg transition-all duration-500 transform hover:scale-105 hover:shadow-2xl shadow-lg overflow-hidden"
+        >
+          {/* Shine Effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+          <span className="relative z-10 flex items-center gap-3">
+            🚀 Get Started Now
+            <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
+          </span>
+        </Link>
+
+        
+      </div>
+
+      {/* Animated Stats */}
+      <div className="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto animate-fade-in-up delay-700">
+        {[
+          { number: '500+', label: 'Projects', color: 'from-cyan-400 to-blue-500' },
+          { number: '99%', label: 'Satisfaction', color: 'from-green-400 to-teal-500' },
+          { number: '24/7', label: 'Support', color: 'from-purple-400 to-pink-500' }
+        ].map((stat, index) => (
+          <div key={index} className="text-center">
+            <div className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2 animate-count-up`}>
+              {stat.number}
+            </div>
+            <div className="text-white/60 text-sm font-medium">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  
+
+  {/* Enhanced CSS Animations */}
+  <style jsx>{`
+    @keyframes parallaxSlow {
+      0%, 100% {
+        transform: scale(1.1) translateY(0);
+      }
+      50% {
+        transform: scale(1.15) translateY(-10px);
+      }
+    }
+
+    @keyframes gradientShift {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes gradientFlow {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes floatOrb1 {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(50px, -60px) scale(1.2);
+      }
+      66% {
+        transform: translate(-30px, 40px) scale(0.8);
+      }
+    }
+
+    @keyframes floatOrb2 {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(-60px, 50px) scale(1.3);
+      }
+      66% {
+        transform: translate(40px, -30px) scale(0.7);
+      }
+    }
+
+    @keyframes floatOrb3 {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(40px, 60px) scale(1.1);
+      }
+      66% {
+        transform: translate(-50px, -40px) scale(0.9);
+      }
+    }
+
+    @keyframes particleFloat {
+      0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-50px) translateX(30px) rotate(90deg);
+      }
+      50% {
+        transform: translateY(30px) translateX(-40px) rotate(180deg);
+      }
+      75% {
+        transform: translateY(-30px) translateX(50px) rotate(270deg);
+      }
+    }
+
+    @keyframes geometricFloat1 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+      50% {
+        transform: translateY(-80px) rotate(180deg) scale(1.1);
+      }
+    }
+
+    @keyframes geometricFloat2 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+      50% {
+        transform: translateY(-100px) rotate(-180deg) scale(1.2);
+      }
+    }
+
+    @keyframes geometricFloat3 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+      50% {
+        transform: translateY(-120px) rotate(360deg) scale(0.9);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes countUp {
+      from {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes scrollIndicator {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
+
+    .animate-parallax-slow {
+      animation: parallaxSlow 30s ease-in-out infinite;
+    }
+
+    .animate-gradient-shift {
+      background-size: 200% 200%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    .animate-gradient-flow {
+      background-size: 200% 200%;
+      animation: gradientFlow 3s ease infinite;
+    }
+
+    .animate-float-orb-1 {
+      animation: floatOrb1 20s ease-in-out infinite;
+    }
+
+    .animate-float-orb-2 {
+      animation: floatOrb2 25s ease-in-out infinite;
+    }
+
+    .animate-float-orb-3 {
+      animation: floatOrb3 18s ease-in-out infinite;
+    }
+
+    .animate-particle-float {
+      animation: particleFloat 25s ease-in-out infinite;
+    }
+
+    .animate-geometric-float-0 {
+      animation: geometricFloat1 30s ease-in-out infinite;
+    }
+
+    .animate-geometric-float-1 {
+      animation: geometricFloat2 35s ease-in-out infinite;
+    }
+
+    .animate-geometric-float-2 {
+      animation: geometricFloat3 25s ease-in-out infinite;
+    }
+
+    .animate-glow-pulse {
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    .animate-slide-in-up {
+      animation: slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .animate-count-up {
+      animation: countUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animate-scroll-indicator {
+      animation: scrollIndicator 2s ease-in-out infinite;
+    }
+
+    .grid-pattern-animated {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gradientShift 60s linear infinite;
+    }
+  `}</style>
 </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-200">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 animate-fade-in-up">
@@ -210,14 +504,15 @@ const Home = () => {
           <p className="text-xl mb-8 opacity-90 animate-fade-in-up delay-200">
             Let's get started
           </p>
-          <button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-pulse-slow">
+          <Link to="/contact" 
+          className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-pulse-slow">
             Get Free Consultation
-          </button>
+          </Link>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-pink-150">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in-left">
@@ -234,7 +529,7 @@ const Home = () => {
                 <p className="text-gray-600 leading-relaxed mb-6">
                   Dissuade ecstatic and properly saw entirely sir why laughter endeavor. In on my jointure horrible margaret suitable he followed speedily. Indeed vanity excuse or mr lovers of on. By offer scale an stuff. Blush be sorry no sight sang lose at the reachpoint.
                 </p>
-                
+
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {stats.map((stat, index) => (
                     <div key={index} className="text-center animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
@@ -295,7 +590,7 @@ const Home = () => {
       </section>
 
       {/* Quality Promise Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-pink-300">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in-left">
@@ -342,7 +637,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-50 to-pink-50">
+      <section className="py-20 bg-gradient-to-r from-purple-400 to-pink-450">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up">
             Our Client's Review
@@ -350,7 +645,7 @@ const Home = () => {
           <p className="text-xl text-gray-600 mb-12 animate-fade-in-up delay-200">
             What client say about us?
           </p>
-          
+
           <div className="bg-white rounded-2xl p-8 shadow-lg max-w-4xl mx-auto transform hover:-translate-y-2 transition-all duration-500 animate-fade-in-up delay-400">
             <div className="text-6xl mb-4">⭐</div>
             <p className="text-gray-600 text-lg italic mb-6">
@@ -370,7 +665,7 @@ const Home = () => {
       </section>
 
       {/* Case Studies Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-bule">
         <div className="max-w-7xl mx-auto text-center">
           <div className="text-4xl mb-4">📊</div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Case Studies</h2>
@@ -405,7 +700,7 @@ const Home = () => {
 
 
       {/* Updated Blog Section with Images */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-red">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Blog</h2>
@@ -424,8 +719,8 @@ const Home = () => {
               >
                 {/* Blog Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={post.image} 
+                  <img
+                    src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -434,7 +729,7 @@ const Home = () => {
                     {post.date}
                   </div>
                 </div>
-                
+
                 {/* Blog Content */}
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-3 text-sm text-gray-500">
@@ -455,7 +750,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        
+
       </section>
 
       {/* CSS Animations */}

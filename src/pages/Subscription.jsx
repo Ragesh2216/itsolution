@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Mock Lucide-style Icons (for a single-file mandate)
 const Check = (props) => (
@@ -131,8 +132,8 @@ const PlanCard = ({ plan, onSelect, delay = 0 }) => {
       {/* Popular Badge */}
       {plan.popular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-          <span className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg animate-pulse-slow">
-            MOST POPULAR
+          <span className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mt-8 px-4 py-1 rounded-full text-sm font-bold shadow-lg animate-pulse-slow">
+        
           </span>
         </div>
       )}
@@ -229,7 +230,7 @@ const CheckoutPage = ({ planId, onBack, onComplete }) => {
         // Simulate processing delay
         await new Promise(resolve => setTimeout(resolve, 2000));
         onComplete();
-        navigate('/thank-you');
+        navigate('/404');
     };
 
     return (
@@ -339,9 +340,9 @@ const SubscriptionView = ({ handleSubscription }) => (
             We offer tailored IT solutions for large organizations with specific requirements. 
             Get a custom quote with dedicated resources and premium support.
           </p>
-          <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
+          <Link to="/contact" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
             Contact Enterprise Sales
-          </button>
+          </Link>
         </div>
 
         {/* Trust Indicators */}

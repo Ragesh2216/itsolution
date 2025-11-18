@@ -6,148 +6,201 @@ export default function NotFound() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    document.title = "404 — Page Not Found | Stackly News";
+    document.title = "404 — Page Not Found | Stackly";
     setIsVisible(true);
   }, []);
 
-  // Suggested pages based on common navigation patterns
   const suggestedPages = [
-    { path: "/", name: "Home", description: "Back to homepage" },
-    { path: "/services", name: "service", description: "our service" },
-    { path: "/tags", name: "Topics", description: "Explore by category" },
-    { path: "/about", name: "About", description: "Learn about us" },
+    { path: "/", name: "Home", icon: "🏠", description: "Return to homepage" },
+    { path: "/services", name: "Services", icon: "⚡", description: "Our solutions" },
+    { path: "/about", name: "About", icon: "👥", description: "Learn about us" },
+    { path: "/contact", name: "Contact", icon: "📞", description: "Get in touch" },
   ];
 
-  // Fun 404 messages
   const errorMessages = [
-    "Looks like this page went on an adventure without us!",
-    "This page is taking a coffee break. Maybe it's time for one too?",
-    "We searched high and low, but this page is playing hide and seek.",
-    "This page must have joined the witness protection program.",
-    "Even our best detectives couldn't find this page!",
+    "Lost in digital space? Let's get you back on track.",
+    "This page decided to take an unexpected vacation.",
+    "Even our best algorithms couldn't find this one.",
+    "You've discovered a hidden corner of the internet.",
+    "This page is currently off exploring the metaverse.",
   ];
 
   const randomMessage = errorMessages[Math.floor(Math.random() * errorMessages.length)];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className={`pt-24 pb-16 px-4 sm:px-6 lg:px-8 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      <div className={`relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="max-w-4xl mx-auto">
-          {/* Main 404 Content */}
+          {/* Main Content */}
           <div className="text-center mb-16">
-            {/* Animated 404 Number */}
-            <div className="relative mb-8">
-              <h1 className="text-9xl md:text-[12rem] font-bold text-gray-900 opacity-10 select-none">
+            {/* Animated 404 */}
+            <div className="relative mb-12">
+              <div className="text-8xl md:text-9xl font-black text-white/10 select-none">
                 404
-              </h1>
+              </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-8xl md:text-[10rem] font-bold text-blue-600 mb-4 animate-bounce">
+                  <div className="text-7xl md:text-8xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-6 animate-float">
                     404
                   </div>
-                  <div className="w-24 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-6"></div>
+                  <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-8 animate-pulse"></div>
                 </div>
               </div>
             </div>
 
-            {/* Error Message */}
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            {/* Message */}
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Page Not Found
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            </h1>
+            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
               {randomMessage}
             </p>
-            <p className="text-gray-500 mb-8">
-              The page <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">"{location.pathname}"</code> doesn't exist or may have been moved.
+            <p className="text-gray-400 mb-12">
+              The page <code className="bg-white/10 px-3 py-1 rounded-lg text-cyan-300 font-mono text-sm">"{location.pathname}"</code> doesn't exist in our universe.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Link
                 to="/"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
+                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg flex items-center justify-center gap-3"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                Back to Homepage
+                <span>🚀</span>
+                Back to Home
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
               </Link>
+              
               <button
                 onClick={() => window.history.back()}
-                className="border-2 border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2"
+                className="group border-2 border-white/20 bg-white/5 backdrop-blur-lg hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-3"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
+                <span>↩️</span>
                 Go Back
+                <span className="group-hover:rotate-180 transition-transform duration-300">🔄</span>
               </button>
             </div>
           </div>
 
-          {/* Suggested Pages */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
-              While you're here, explore some popular pages
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {suggestedPages.map((page, index) => (
-                <Link
-                  key={index}
-                  to={page.path}
-                  className="group block p-6 border-2 border-gray-100 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 transform hover:scale-[1.02]"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-200">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
-                        {page.name}
-                      </h4>
-                      <p className="text-gray-600 text-sm">{page.description}</p>
-                    </div>
-                    <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
+          {/* Quick Navigation Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {suggestedPages.map((page, index) => (
+              <Link
+                key={index}
+                to={page.path}
+                className="group bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="text-center">
+                  <div className="text-3xl mb-3 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+                    {page.icon}
                   </div>
-                </Link>
-              ))}
-            </div>
+                  <h3 className="text-white font-bold text-lg mb-2 group-hover:text-cyan-300 transition-colors duration-300">
+                    {page.name}
+                  </h3>
+                  <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                    {page.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
 
           {/* Help Section */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white text-center">
-            <h3 className="text-2xl font-bold mb-4">Need Help Finding Something?</h3>
-            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-              Can't find what you're looking for? Our team is here to help you navigate the site and find the information you need.
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-lg border border-cyan-500/20 rounded-3xl p-8 text-center mb-12">
+            <div className="text-4xl mb-4">💫</div>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Need Immediate Assistance?
+            </h3>
+            <p className="text-cyan-100 mb-6 max-w-2xl mx-auto">
+              Our support team is ready to help you find what you're looking for and answer any questions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
-                className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200"
+                className="bg-white text-cyan-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Contact Support
               </Link>
-              
+              <a
+                href="mailto:support@stackly.com"
+                className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+              >
+                Email Us
+              </a>
             </div>
           </div>
 
-          {/* Fun Stats */}
-          <div className="text-center mt-12">
-            <div className="inline-flex items-center gap-6 text-sm text-gray-500 bg-white rounded-full px-6 py-3 shadow-lg">
-              <span>📊</span>
-              <span>You're one of the few who discovered our secret 404 page!</span>
-              <span>🎉</span>
+          {/* Fun Element */}
+          <div className="text-center">
+            <div className="inline-flex items-center gap-4 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full px-6 py-3">
+              <span className="text-yellow-400">⭐</span>
+              <span className="text-gray-300 text-sm">
+                You found a rare 404 page! This happens to only 0.1% of visitors.
+              </span>
+              <span className="text-yellow-400">⭐</span>
             </div>
           </div>
         </div>
       </div>
 
-      
+      {/* Floating Elements */}
+      <div className="absolute bottom-10 left-10 animate-bounce-slow">
+        <div className="w-6 h-6 bg-cyan-400/30 rounded-full"></div>
+      </div>
+      <div className="absolute top-20 right-20 animate-bounce-slow delay-1000">
+        <div className="w-4 h-4 bg-purple-400/30 rounded-full"></div>
+      </div>
+      <div className="absolute top-1/3 left-1/4 animate-bounce-slow delay-500">
+        <div className="w-3 h-3 bg-blue-400/30 rounded-full"></div>
+      </div>
+
+      {/* Enhanced CSS Animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+        
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-bounce-slow {
+          animation: bounce-slow 2s ease-in-out infinite;
+        }
+
+        .delay-500 {
+          animation-delay: 500ms;
+        }
+
+        .delay-1000 {
+          animation-delay: 1000ms;
+        }
+
+        .delay-2000 {
+          animation-delay: 2000ms;
+        }
+      `}</style>
     </div>
   );
 }
