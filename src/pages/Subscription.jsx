@@ -345,17 +345,7 @@ const SubscriptionView = ({ handleSubscription }) => (
           </Link>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-16 text-center animate-fade-in delay-1200">
-          <p className="text-gray-500 text-sm mb-6">Trusted by industry leaders</p>
-          <div className="flex justify-center items-center space-x-8 opacity-60">
-            <div className="text-2xl">🏢</div>
-            <div className="text-2xl">💻</div>
-            <div className="text-2xl">🌐</div>
-            <div className="text-2xl">🔒</div>
-            <div className="text-2xl">☁️</div>
-          </div>
-        </div>
+       
     </div>
 );
 

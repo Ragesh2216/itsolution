@@ -576,9 +576,9 @@ const Home = () => {
                       <div>
                         <h5 className="font-bold text-white mb-2">{step.title}</h5>
                         <p className="text-blue-200 text-sm mb-3">{step.description}</p>
-                        <button className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105">
+                        <Link to="/404" className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105">
                           {step.button}
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ))}

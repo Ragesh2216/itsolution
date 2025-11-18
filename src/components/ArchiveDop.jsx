@@ -14,7 +14,6 @@ const ArchiveDop = ({ closeMenu }) => {
     closeMenu?.();
   };
 
-  // Keyboard navigation support
   const handleKeyDown = (event) => {
     switch (event.key) {
       case "Escape":
@@ -55,8 +54,7 @@ const ArchiveDop = ({ closeMenu }) => {
         aria-haspopup="true"
         aria-controls="archive-menu"
       >
-        Home1
-        {/* Removed the ExpandMoreOutlinedIcon */}
+        home
       </button>
 
       {isOpen && (
@@ -68,14 +66,22 @@ const ArchiveDop = ({ closeMenu }) => {
         >
           <div className="py-1" role="none">
             <Link
+              to="/" 
+              onClick={closeDropdown}
+              className="navLink block px-4 py-2 text-slate-800 font-medium text-base hover:bg-gray-100 transition-colors duration-150 focus:bg-gray-100 focus:outline-none"
+              role="menuitem"
+              tabIndex="0"
+            >
+              Home Page 1
+            </Link>
+            <Link
               to="/homepage2" 
               onClick={closeDropdown}
               className="navLink block px-4 py-2 text-slate-800 font-medium text-base hover:bg-gray-100 transition-colors duration-150 focus:bg-gray-100 focus:outline-none"
               role="menuitem"
               tabIndex="0"
-              id="archive-menu-item-0"
             >
-              Home2
+              Home Page 2
             </Link>
           </div>
         </div>
