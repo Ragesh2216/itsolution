@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import yuva from '../images/www.webp';
+import sakthi from '../images/soe.webp';
+import dhara from '../images/ceo.webp';
 
-const Home  = () => {
+
+const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -76,6 +80,7 @@ const Home  = () => {
 
   const blogPosts = [
     {
+      image: sakthi,
       date: '31 July',
       author: 'admin',
       comments: '2 Comments',
@@ -83,6 +88,7 @@ const Home  = () => {
       description: 'Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described dejection incommode.'
     },
     {
+      image: yuva,
       date: '31 July',
       author: 'admin',
       comments: '2 Comments',
@@ -90,6 +96,7 @@ const Home  = () => {
       description: 'Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described dejection incommode.'
     },
     {
+      image: dhara,
       date: '31 July',
       author: 'admin',
       comments: '2 Comments',
@@ -99,63 +106,62 @@ const Home  = () => {
   ];
 
   return (
-   <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
-  {/* Hero Section */}
-  <section className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-    {/* Background Image */}
-    <div 
-      className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-      style={{
-        backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80")'
-        // You can replace this with your own image URL
-      }}
-    ></div>
-    
-    {/* Background Overlay */}
-    <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 via-white/80 to-blue-50/80"></div>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-green to-red-1000">
+      {/* Hero Section */}
+<section className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+  {/* Background Image */}
+  <div className="absolute inset-0">
+    <img 
+      src="hero.png" 
+      alt="stackly" 
+      className="w-full h-full object-cover object-center"
+    />
+  </div>
+  
+  {/* Background Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 via-white/80 to-blue-50/80"></div>
 
-    <div className="max-w-7xl mx-auto text-center relative z-10">
-      <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-6 animate-pulse">
-          For millions of users
+  <div className="max-w-7xl mx-auto text-center relative z-10">
+    <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-6 animate-pulse">
+        For millions of users
+      </span>
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+        Stackly Powerful Digital<br />
+        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          IT solutions Company
         </span>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-          Stackly Powerful Digital<br />
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            IT solutions Company
-          </span>
-        </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-          Affixed pretend account ten natural. Need eat week even yet that. Incommode delighted he resolving sportsmen do in listening.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-bounce-slow">
-            Get started
-          </button>
-        </div>
+      </h1>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+        Affixed pretend account ten natural. Need eat week even yet that. Incommode delighted he resolving sportsmen do in listening.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-bounce-slow">
+          Get started
+        </button>
       </div>
     </div>
+  </div>
 
-    {/* Floating elements */}
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full animate-float-slow opacity-10"
-          style={{
-            width: `${Math.random() * 100 + 50}px`,
-            height: `${Math.random() * 100 + 50}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: `radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(147,51,234,0.1) 100%)`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${Math.random() * 20 + 10}s`
-          }}
-        />
-      ))}
-    </div>
-  </section>
-
+  {/* Floating elements */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+    {[...Array(20)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute rounded-full animate-float-slow opacity-10"
+        style={{
+          width: `${Math.random() * 100 + 50}px`,
+          height: `${Math.random() * 100 + 50}px`,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          background: `radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(147,51,234,0.1) 100%)`,
+          animationDelay: `${Math.random() * 5}s`,
+          animationDuration: `${Math.random() * 20 + 10}s`
+        }}
+      />
+    ))}
+  </div>
+</section>
 
       {/* Services Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
@@ -397,79 +403,8 @@ const Home  = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 animate-fade-in-up">
-            Contact us
-          </h2>
-          <p className="text-xl text-gray-300 text-center mb-12 animate-fade-in-up delay-200">
-            You can connect with us when need help!
-          </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="animate-fade-in-left">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all duration-300">
-                  <div className="text-2xl">📍</div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Office Location</h3>
-                    <p className="text-gray-300">22 Baker Street, London,<br />United Kingdom, W1U 3BW</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all duration-300">
-                  <div className="text-2xl">📞</div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-gray-300">+44-20-7328-4499<br />+99-34-8878-9989</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all duration-300">
-                  <div className="text-2xl">✉️</div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-gray-300">info@yourdomain.com<br />admin@yourdomain.com</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="animate-fade-in-right">
-              <div className="bg-gray-800 rounded-2xl p-8">
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Phone"
-                    className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-                  />
-                  <textarea
-                    placeholder="Please describe what you need. *"
-                    rows="4"
-                    className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-                  ></textarea>
-                  <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                    Free consultation
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Section */}
+      {/* Updated Blog Section with Images */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -484,29 +419,43 @@ const Home  = () => {
             {blogPosts.map((post, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up group"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up group"
                 style={{ animationDelay: `${index * 200}ms` }}
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="bg-blue-500 text-white px-3 py-1 rounded-lg font-semibold">
+                {/* Blog Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* Date Badge */}
+                  <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-lg font-semibold text-sm">
                     {post.date}
                   </div>
-                  <span className="text-gray-500 text-sm">{post.author}</span>
-                  <span className="text-gray-500 text-sm">{post.comments}</span>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                  {post.description}
-                </p>
-                <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
-                  Read More →
-                </button>
+                
+                {/* Blog Content */}
+                <div className="p-6">
+                  <div className="flex items-center gap-4 mb-3 text-sm text-gray-500">
+                    <span>{post.author}</span>
+                    <span>{post.comments}</span>
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 text-lg leading-tight">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {post.description}
+                  </p>
+                  <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                    Read More →
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
+        
       </section>
 
       {/* CSS Animations */}

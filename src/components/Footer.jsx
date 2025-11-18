@@ -26,10 +26,10 @@ const Footer = () => {
           </p>
           <div className="flex space-x-4">
             {[
-              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" />, url: "#" },
-              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" />, url: "#" },
-              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" />, url: "#" },
-              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" />, url: "#" }
+              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" />, url: "./404" },
+              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" />, url: "./404" },
+              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" />, url: "./404" },
+              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" />, url: "./404" }
             ].map((social, index) => (
               <a
                 key={index}
@@ -47,12 +47,12 @@ const Footer = () => {
           <h5 className="text-white text-lg font-semibold mb-6">Our Services</h5>
           <ul className="space-y-3">
             {[
-              { label: "Cloud Solutions", url: "/services/cloud" },
-              { label: "Cybersecurity", url: "/services/security" },
-              { label: "Web Development", url: "/services/web-dev" },
-              { label: "Mobile Apps", url: "/services/mobile" },
-              { label: "IT Consulting", url: "/services/consulting" },
-              { label: "Data Analytics", url: "/services/analytics" }
+              { label: "Cloud Solutions", url: "/services" },
+              { label: "Cybersecurity", url: "/services" },
+              { label: "Web Development", url: "/services" },
+              { label: "Mobile Apps", url: "/services" },
+              { label: "IT Consulting", url: "/services" },
+              { label: "Data Analytics", url: "/services" }
             ].map((service, index) => (
               <li key={index}>
                 <a 
@@ -74,9 +74,9 @@ const Footer = () => {
               { label: "Home", url: "/" },
               { label: "About Us", url: "/about" },
               { label: "Services", url: "/services" },
-              { label: "Portfolio", url: "/portfolio" },
-              { label: "Blog", url: "/blog" },
-              { label: "Careers", url: "/careers" }
+              { label: "Contact Us", url: "/contact" },
+              { label: "login", url: "/login " },
+              { label: "signup", url: "/login " }
             ].map((link, index) => (
               <li key={index}>
                 <a 
@@ -119,19 +119,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Subscription */}
-          <div className="mt-6">
-            <p className="text-sm text-gray-300 mb-3">Subscribe to our newsletter</p>
-            <div className="flex space-x-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-              />
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors duration-200">
-                Join
-              </button>
-            </div>
-          </div>
+         
         </div>
       </div>
 

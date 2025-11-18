@@ -441,14 +441,14 @@ export default function ITService() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/contact-it"
+                  to="/contact"
                   className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group/btn"
                 >
                   <span className="relative z-10">Contact IT Solutions Team</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></div>
                 </Link>
                 <Link
-                  to="/schedule-consultation"
+                  to="/contact"
                   className="border border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 hover:scale-105 transform transition-all duration-300 relative overflow-hidden group/btn"
                 >
                   <span className="relative z-10">Schedule Free Consultation</span>

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+import sakthi from '../images/sakthi.webp';
+import abi from '../images/abi.webp.jpg';
+import dhara from '../images/dhara.webp';
+import yuva from '../images/yuva.webp';
 import { Link, useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -111,28 +114,32 @@ const About = () => {
       role: "Chief Technology Officer",
       bio: "15+ years in enterprise software architecture and cloud solutions. Former Principal Architect at TechCorp.",
       expertise: ["Cloud Architecture", "Enterprise Solutions", "System Design"],
-      color: "from-blue-400 to-cyan-500"
+      color: "from-blue-400 to-cyan-500",
+      image: abi
     },
     {
       name: "Marcus Johnson",
       role: "Head of Cybersecurity",
       bio: "Cybersecurity expert with CISSP certification. Specialized in threat intelligence and risk management.",
       expertise: ["Security Architecture", "Risk Assessment", "Compliance"],
-      color: "from-green-400 to-emerald-500"
+      color: "from-green-400 to-emerald-500",
+      image: yuva
     },
     {
       name: "Dr. Aisha Patel",
       role: "AI & Data Science Lead",
       bio: "PhD in Computer Science with focus on machine learning and data analytics. Published researcher.",
       expertise: ["Machine Learning", "Data Engineering", "AI Solutions"],
-      color: "from-purple-400 to-violet-500"
+      color: "from-purple-400 to-violet-500",
+      image: dhara
     },
     {
       name: "David Kim",
       role: "DevOps & Cloud Director",
       bio: "Infrastructure automation expert with extensive experience in scalable cloud deployments.",
       expertise: ["DevOps", "Cloud Infrastructure", "Automation"],
-      color: "from-orange-400 to-red-500"
+      color: "from-orange-400 to-red-500",
+      image: sakthi
     }
   ];
 
@@ -327,7 +334,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* Team Section */}
+        {/* Updated Team Section with Images */}
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 animate-fade-in-up">
@@ -342,33 +349,51 @@ const About = () => {
             {teamMembers.map((member, index) => (
               <div 
                 key={index} 
-                className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in-up group"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in-up group"
                 style={{ animationDelay: `${index * 150 + 400}ms` }}
               >
-                <div className={`w-20 h-20 bg-gradient-to-r ${member.color} rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                  {member.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
-                  {member.name}
-                </h3>
-                <p className={`font-semibold mb-3 bg-gradient-to-r ${member.color} bg-clip-text text-transparent`}>
-                  {member.role}
-                </p>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                  {member.bio}
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {member.expertise.map((skill, skillIndex) => (
-                    <span 
-                      key={skillIndex} 
-                      className="bg-gradient-to-r from-gray-100 to-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium group-hover:scale-105 transition-transform duration-300"
-                    >
-                      {skill}
+                {/* Image Container */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60`}></div>
+                  {/* Role Badge */}
+                  <div className="absolute bottom-3 left-3">
+                    <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-semibold">
+                      {member.role.split(' ')[0]}
                     </span>
-                  ))}
+                  </div>
                 </div>
+                
+                {/* Content */}
+                <div className="p-6 text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                    {member.name}
+                  </h3>
+                  <p className={`font-semibold mb-3 bg-gradient-to-r ${member.color} bg-clip-text text-transparent text-sm`}>
+                    {member.role}
+                  </p>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                    {member.bio}
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {member.expertise.map((skill, skillIndex) => (
+                      <span 
+                        key={skillIndex} 
+                        className="bg-gradient-to-r from-gray-100 to-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium group-hover:scale-105 transition-transform duration-300"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
                 {/* Animated border */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-200 transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-200 transition-all duration-500 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
               </div>
             ))}
           </div>
@@ -448,8 +473,6 @@ const About = () => {
           </div>
         </section>
       </main>
-
-      
 
       {/* CSS Animations */}
       <style jsx global>{`

@@ -21,7 +21,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="bg-gradient-to-r from-[#0cfcc0] to-[#0cfcc0] fixed top-0 left-0 w-full shadow-md z-[999]">
+    <header className="bg-gradient-to-r from-[#a09df6] to-[#a09df6] fixed top-0 left-0 w-full shadow-md z-[999]">
       <nav
         ref={navRef}
         className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-7xl mx-auto relative"
