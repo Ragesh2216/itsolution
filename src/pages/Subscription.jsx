@@ -344,8 +344,6 @@ const SubscriptionView = ({ handleSubscription }) => (
             Contact Enterprise Sales
           </Link>
         </div>
-
-       
     </div>
 );
 
@@ -357,12 +355,29 @@ const Subscription = () => {
   const [message, setMessage] = useState('');
   const [isAuthReady, setIsAuthReady] = useState(false); 
 
+  // Function to scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   // Function to handle moving to checkout
   const handleSubscription = (planId) => {
     setSelectedPlanId(planId);
     setCurrentView('checkout');
     setMessage(`🚀 Loading checkout for ${planId}...`);
     setTimeout(() => setMessage(''), 1500);
+    
+    // Scroll to top when switching to checkout
+    setTimeout(() => {
+      scrollToTop();
+    }, 100);
   }
 
   // Function to handle purchase completion
@@ -371,13 +386,28 @@ const Subscription = () => {
     setTimeout(() => setMessage(''), 5000);
     setCurrentView('home');
     setSelectedPlanId(null);
+    
+    // Scroll to top when returning home
+    setTimeout(() => {
+      scrollToTop();
+    }, 100);
   }
 
   // Function to go back to subscription view
   const handleBackToPlans = () => {
     setCurrentView('home');
     setSelectedPlanId(null);
+    
+    // Scroll to top when going back to plans
+    setTimeout(() => {
+      scrollToTop();
+    }, 100);
   }
+
+  // Scroll to top when component mounts and when view changes
+  useEffect(() => {
+    scrollToTop();
+  }, [currentView]);
 
   // Mock Firebase initialization hook
   useEffect(() => {
@@ -411,6 +441,9 @@ const Subscription = () => {
           </div>
         </div>
       )}
+
+      {/* Add a top anchor for scrolling */}
+      <div id="top-anchor" className="absolute top-0"></div>
 
       {content}
 
