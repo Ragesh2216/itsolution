@@ -19,17 +19,19 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-8 border-b border-gray-700">
         
         {/* Company Info */}
-        <div className="lg:col-span-1">
-          <img src={logoPlaceholderUrl} width={120} className="mb-4" alt="Stackly IT Solutions" />
+        <div className="lg:col-span-1 text-center md:text-left">
+          <div className="flex justify-center md:justify-start">
+            <img src={logoPlaceholderUrl} width={120} className="mb-4" alt="Stackly IT Solutions" />
+          </div>
           <p className="text-sm text-gray-400 leading-relaxed mb-4">
             Your trusted partner for comprehensive IT solutions. We deliver cutting-edge technology services including cloud computing, cybersecurity, software development, and digital transformation.
           </p>
-          <div className="flex space-x-4">
+          <div className="flex justify-center md:justify-start space-x-4">
             {[
-              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" />, url: "./404" },
-              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" />, url: "./404" },
-              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" />, url: "./404" },
-              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" />, url: "./404" }
+              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" />, url: "/404" },
+              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" />, url: "/404" },
+              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" />, url: "/404" },
+              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" />, url: "/404" }
             ].map((social, index) => (
               <a
                 key={index}
@@ -43,7 +45,7 @@ const Footer = () => {
         </div>
 
         {/* Services */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 text-center md:text-left">
           <h5 className="text-white text-lg font-semibold mb-6">Our Services</h5>
           <ul className="space-y-3">
             {[
@@ -67,7 +69,7 @@ const Footer = () => {
         </div>
         
         {/* Quick Links */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 text-center md:text-left">
           <h5 className="text-white text-lg font-semibold mb-6">Quick Links</h5>
           <ul className="space-y-3">
             {[
@@ -75,8 +77,8 @@ const Footer = () => {
               { label: "About Us", url: "/about" },
               { label: "Services", url: "/services" },
               { label: "Contact Us", url: "/contact" },
-              { label: "login", url: "/login " },
-              { label: "signup", url: "/login " }
+              { label: "Login", url: "/login" },
+              { label: "Signup", url: "/login" }
             ].map((link, index) => (
               <li key={index}>
                 <a 
@@ -91,26 +93,37 @@ const Footer = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 text-center md:text-left">
           <h5 className="text-white text-lg font-semibold mb-6">Get In Touch</h5>
           <div className="space-y-4">
-            <div className="flex items-start space-x-3">
-              <LocationOnIcon className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-              <div>
+            <div className="flex flex-col items-center md:items-start md:flex-row md:space-x-3">
+              <LocationOnIcon className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0 mb-2 md:mb-0" />
+              <div className="text-center md:text-left">
                 <p className="text-sm text-gray-300 font-medium">MMR Complex</p>
                 <p className="text-sm text-gray-400">Salem, Tamil Nadu</p>
                 <p className="text-sm text-gray-400">India - 636008</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex justify-center md:justify-start">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=MMR+COMPLEX,+Salem,+Tamil+Nadu+636008"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sky-400 hover:text-sky-300 underline text-sm"
+              >
+                View on Google Maps
+              </a>
+            </div>
+            
+            <div className="flex justify-center md:justify-start items-center space-x-3">
               <PhoneIcon className="w-5 h-5 text-blue-400 flex-shrink-0" />
               <a href="tel:+911234567890" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
                 +91 12345 67890
               </a>
             </div>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex justify-center md:justify-start items-center space-x-3">
               <EmailIcon className="w-5 h-5 text-blue-400 flex-shrink-0" />
               <a href="mailto:info@stacklyit.com" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
                 info@stacklyit.com
@@ -118,7 +131,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Newsletter Subscription */}
          
         </div>
       </div>
@@ -136,10 +148,10 @@ const Footer = () => {
           {/* Legal Links */}
           <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
             {[
-              { label: "Privacy Policy", url: "/privacy" },
-              { label: "Terms of Service", url: "/terms" },
-              { label: "Cookie Policy", url: "/cookies" },
-              { label: "Sitemap", url: "/sitemap" }
+              { label: "Privacy Policy", url: "/404" },
+              { label: "Terms of Service", url: "/404" },
+              { label: "Cookie Policy", url: "/404" },
+              { label: "Sitemap", url: "/404" }
             ].map((link, index) => (
               <a
                 key={index}
