@@ -97,7 +97,7 @@ const Navbar = () => {
         >
           {/* Home Dropdown */}
           <li className="relative w-full lg:w-auto">
-            <button
+            <Link to="/"
               onClick={toggleHomeDropdown}
               className="flex items-center justify-center lg:justify-start py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full lg:w-auto"
             >
@@ -118,7 +118,7 @@ const Navbar = () => {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-            </button>
+            </Link>
             
             {/* Dropdown Menu */}
             <div
@@ -136,16 +136,7 @@ const Navbar = () => {
                 mt-1
               `}
             >
-              <Link
-                to="/"
-                onClick={() => {
-                  closeHomeDropdown();
-                  closeMenu();
-                }}
-                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 text-center lg:text-left"
-              >
-                Home1
-              </Link>
+            
               <Link
                 to="/homepage2"
                 onClick={() => {

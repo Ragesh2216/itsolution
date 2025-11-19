@@ -1,318 +1,398 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [showLoginPassword, setShowLoginPassword] = useState(false);
-  const [showSignupPassword, setShowSignupPassword] = useState(false);
+export default function Login() {
+  const [isLogin, setIsLogin] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    rememberMe: false,
+    agreeToTerms: false
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const flip = () => setIsFlipped(true);
-  const flipAgain = () => setIsFlipped(false);
-
-  const toggleLoginPassword = () => setShowLoginPassword(prev => !prev);
-  const toggleSignupPassword = () => setShowSignupPassword(prev => !prev);
-
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login submitted!');
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sign Up submitted!');
+    setIsLoading(true);
+    
+    // Simulate API call and then navigate to 404
+    setTimeout(() => {
+      setIsLoading(false);
+      // Navigate to 404 page after form submission
+      navigate('/404');
+    }, 2000);
   };
 
-  const customStyles = `
-    .auth-container {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-    }
-    .card-perspective {
-      perspective: 1500px;
-    }
-    .flip-card-inner {
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      transform-style: preserve-3d;
-    }
-    .flip-card-inner.flipped {
-      transform: rotateY(180deg);
-    }
-    .card-face {
-      backface-visibility: hidden;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .box-signup {
-      transform: rotateY(180deg);
-    }
-    .floating-element {
-      animation: float 6s ease-in-out infinite;
-    }
-    .floating-element-2 {
-      animation: float 8s ease-in-out infinite;
-      animation-delay: 1s;
-    }
-    .floating-element-3 {
-      animation: float 10s ease-in-out infinite;
-      animation-delay: 2s;
-    }
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-fadeInUp {
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-    .glow-effect {
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-    }
-    .glow-effect:hover {
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-    }
-    .input-glow:focus {
-      box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-    }
-  `;
+  const toggleAuthMode = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      setIsLogin(!isLogin);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        rememberMe: false,
+        agreeToTerms: false
+      });
+      setIsVisible(true);
+    }, 300);
+  };
 
   return (
-    <>
-      <style>{customStyles}</style>
-      
-      <div className="auth-container min-h-screen flex   items-center justify-center p-4 relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="floating-element absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 blur-xl"></div>
-          <div className="floating-element-2 absolute top-3/4 right-1/4 w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-20 blur-xl"></div>
-          <div className="floating-element-3 absolute top-1/2 left-3/4 w-24 h-24 bg-gradient-to-r from-green-400 to-teal-400 rounded-full opacity-20 blur-xl"></div>
-          <div className="floating-element absolute top-2/3 left-1/6 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-20 blur-xl"></div>
-        </div>
-
-        {/* Main Card Container */}
-        <div className={`w-full max-w-md mt-4 card-perspective transition-all duration-1000 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-          
-          {/* Flip Container */}
-          <div className={`flip-card-inner relative w-full h-[600px] ${isFlipped ? 'flipped' : ''}`}>
-            
-            {/* LOGIN SIDE */}
-            <div className="box-login mt-12 card-face absolute w-full h-full rounded-3xl p-8 flex flex-col items-center justify-center glow-effect">
-              <div className="w-full max-w-xs animate-fadeInUp">
-                {/* Header */}
-                <div className="text-center mb-16">
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-2">
-                    Welcome Back
-                  </h1>
-                  <p className="text-white/70 text-sm">
-                    Login  in to your account to continue
-                  </p>
-                </div>
-
-                <form onSubmit={handleLoginSubmit} className="space-y-6">
-                  {/* Email Input */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <i className="fa fa-envelope text-white/60 group-focus-within:text-purple-300 transition-colors duration-200" />
-                    </div>
-                    <input
-                      className="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-purple-400 input-glow transition-all duration-200 backdrop-blur-sm"
-                      type="email"
-                      name="email"
-                      placeholder="Email Address"
-                      required
-                    />
-                  </div>
-
-                  {/* Password Input */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <i className="fa fa-lock text-white/60 group-focus-within:text-purple-300 transition-colors duration-200" />
-                    </div>
-                    <input
-                      className="w-full pl-10 pr-12 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-purple-400 input-glow transition-all duration-200 backdrop-blur-sm"
-                      type={showLoginPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={toggleLoginPassword}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center password-toggle-icon"
-                    >
-                      <i className={`fa text-white/60 hover:text-purple-300 transition-colors duration-200 ${showLoginPassword ? 'fa-eye' : 'fa-eye-slash'}`} />
-                    </button>
-                  </div>
-
-                  
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 rounded-2xl font-semibold hover:from-purple-600 hover:to-pink-600 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
-                  >
-                    LOGIN IN
-                  </button>
-                </form>
-
-                {/* Divider */}
-                <div className="relative flex items-center my-6">
-                  <div className="flex-grow border-t border-white/20"></div>
-                  <span className="flex-shrink mx-4 text-white/60 text-sm">or continue with</span>
-                  <div className="flex-grow border-t border-white/20"></div>
-                </div>
-
-                
-
-                {/* Sign Up Link */}
-                <div className="text-center">
-                  <p className="text-white/70 text-sm">
-                    Don't have an account?{" "}
-                    <button
-                      onClick={flip}
-                      className="text-purple-300 font-semibold hover:text-purple-200 transition-colors duration-200 underline"
-                    >
-                      Sign up now
-                    </button>
-                  </p>
-                </div>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 mt-16 to-purple-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left Side - Illustration & Info */}
+          <div className={`text-center lg:text-left transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <div className="mb-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                {isLogin ? "Welcome Back" : "Join Us Today"}
+              </h1>
+              <p className="text-xl text-gray-600 max-w-md mx-auto lg:mx-0">
+                {isLogin 
+                  ? "Sign in to access your IT solutions dashboard and manage your services."
+                  : "Create your account and unlock the full potential of our IT solutions platform."
+                }
+              </p>
             </div>
 
-            {/* SIGN UP SIDE */}
-            <div className="box-signup card-face  mt-4 absolute w-full h-full  mt-12 rounded-3xl p-3 flex flex-col items-center justify-center glow-effect">
-              <div className="w-full max-w-xs animate-fadeInUp">
-                {/* Header */}
-                <div className="text-center mb-16">
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent mb-6">
-                    Join Us
-                  </h1>
-                  <p className="text-white/70 text-sm">
-                    Create your account to get started
-                  </p>
+            {/* Features List */}
+            <div className="space-y-4 max-w-md mx-auto lg:mx-0">
+              {[
+                { icon: "🛡️", text: "Enterprise-grade security", color: "from-blue-500 to-cyan-500" },
+                { icon: "⚡", text: "Lightning fast performance", color: "from-green-500 to-emerald-500" },
+                { icon: "🔧", text: "24/7 technical support", color: "from-purple-500 to-pink-500" },
+                { icon: "📊", text: "Advanced analytics dashboard", color: "from-orange-500 to-red-500" }
+              ].map((feature, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-500 transform hover:-translate-y-1 group"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-lg flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform duration-300`}>
+                    {feature.icon}
+                  </div>
+                  <span className="text-gray-700 font-medium group-hover:text-gray-900 transition-colors duration-300">
+                    {feature.text}
+                  </span>
                 </div>
+              ))}
+            </div>
 
-                <form onSubmit={handleSignupSubmit} className="space-y-6">
-                  {/* Username Input */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <i className="fa fa-user text-white/60 group-focus-within:text-cyan-300 transition-colors duration-200" />
-                    </div>
-                    <input
-                      className="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 input-glow transition-all duration-200 backdrop-blur-sm"
-                      type="text"
-                      name="username"
-                      placeholder="Full Name"
-                      required
-                    />
+            {/* Stats */}
+            <div className="mt-12 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+              {[
+                { number: "10K+", label: "Users" },
+                { number: "99.9%", label: "Uptime" },
+                { number: "24/7", label: "Support" }
+              ].map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {stat.number}
                   </div>
+                  <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                  {/* Email Input */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <i className="fa fa-envelope text-white/60 group-focus-within:text-cyan-300 transition-colors duration-200" />
-                    </div>
-                    <input
-                      className="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 input-glow transition-all duration-200 backdrop-blur-sm"
-                      type="email"
-                      name="email"
-                      placeholder="Email Address"
-                      required
-                    />
-                  </div>
+          {/* Right Side - Auth Form */}
+          <div className={`bg-white rounded-2xl mt-8 shadow-2xl p-8 lg:p-12 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            {/* Form Header */}
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-white">
+                  {isLogin ? "🔐" : "🚀"}
+                </span>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mt-8 mb-2">
+                {isLogin ? "Sign In to Your Account" : "Create New Account"}
+              </h2>
+              <p className="text-gray-600">
+                {isLogin 
+                  ? "Enter your credentials to access your dashboard"
+                  : "Fill in your details to get started"
+                }
+              </p>
+            </div>
 
-                  {/* Password Input */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <i className="fa fa-lock text-white/60 group-focus-within:text-cyan-300 transition-colors duration-200" />
-                    </div>
-                    <input
-                      className="w-full pl-10 pr-12 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 input-glow transition-all duration-200 backdrop-blur-sm"
-                      type={showSignupPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Create Password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={toggleSignupPassword}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center password-toggle-icon"
-                    >
-                      <i className={`fa text-white/60 hover:text-cyan-300 transition-colors duration-200 ${showSignupPassword ? 'fa-eye' : 'fa-eye-slash'}`} />
-                    </button>
-                  </div>
-
-                  {/* Terms Agreement */}
-                  <div className="flex items-center text-sm">
-                    <label className="flex items-center text-white/70 cursor-pointer hover:text-white transition-colors duration-200">
-                      <input 
-                        type="checkbox" 
-                        required
-                        className="mr-2 rounded bg-white/10 border-white/20 text-cyan-500 focus:ring-cyan-400"
-                      />
-                      I agree to the{" "}
-                      <a href="#" className="text-cyan-300 hover:text-cyan-200 ml-1 transition-colors duration-200">
-                        terms and conditions
-                      </a>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Fields - Only for Signup */}
+              {!isLogin && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in-up">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                      First Name *
                     </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      required={!isLogin}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+                      placeholder="John"
+                    />
                   </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-4 rounded-2xl font-semibold hover:from-cyan-600 hover:to-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
-                  >
-                    CREATE ACCOUNT
-                  </button>
-                </form>
-
-                {/* Divider */}
-                <div className="relative flex items-center my-6">
-                  <div className="flex-grow border-t border-white/20"></div>
-                  <span className="flex-shrink mx-4 text-white/60 text-sm">or sign up with</span>
-                  <div className="flex-grow border-t border-white/20"></div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      required={!isLogin}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+                      placeholder="Doe"
+                    />
+                  </div>
                 </div>
+              )}
 
-                
+              {/* Email Field */}
+              <div className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+                  placeholder="your.email@company.com"
+                />
+              </div>
 
-                {/* Login Link */}
-                <div className="text-center">
-                  <p className="text-white/70 text-sm">
-                    Already have an account?{" "}
-                    <button
-                      onClick={flipAgain}
-                      className="text-cyan-300 font-semibold hover:text-cyan-200 transition-colors duration-200 underline"
-                    >
-                      Login in
-                    </button>
-                  </p>
+              {/* Password Field */}
+              <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              {/* Confirm Password - Only for Signup */}
+              {!isLogin && (
+                <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                    Confirm Password *
+                  </label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required={!isLogin}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+                    placeholder="••••••••"
+                  />
+                </div>
+              )}
+
+              {/* Checkboxes */}
+              <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                {isLogin ? (
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="rememberMe"
+                        checked={formData.rememberMe}
+                        onChange={handleInputChange}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Remember me</span>
+                    </label>
+                    <Link to="/404" className="text-sm text-blue-600 hover:text-blue-500 transition-colors duration-300">
+                      Forgot password?
+                    </Link>
+                  </div>
+                ) : (
+                  <label className="flex items-start">
+                    <input
+                      type="checkbox"
+                      name="agreeToTerms"
+                      checked={formData.agreeToTerms}
+                      onChange={handleInputChange}
+                      required
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1 flex-shrink-0"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">
+                      I agree to the{" "}
+                      <Link to="/404" className="text-blue-600 hover:text-blue-500 transition-colors duration-300">
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link to="/404" className="text-blue-600 hover:text-blue-500 transition-colors duration-300">
+                        Privacy Policy
+                      </Link>
+                    </span>
+                  </label>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button 
+                type="submit"
+                disabled={isLoading}
+                className={`w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center animate-fade-in-up ${
+                  isLoading ? 'animate-pulse' : ''
+                }`}
+                style={{ animationDelay: '500ms' }}
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {isLogin ? "Signing In..." : "Creating Account..."}
+                  </>
+                ) : (
+                  isLogin ? "Sign In" : "Create Account"
+                )}
+              </button>
+
+              {/* Divider */}
+              <div className="relative animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
                 </div>
               </div>
-            </div>
+
+              {/* Social Login */}
+              <div className="grid grid-cols-2 gap-4 animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                <button
+                  type="button"
+                  onClick={() => navigate('/404')}
+                  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  Google
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/404')}
+                  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  </svg>
+                  Twitter
+                </button>
+              </div>
+
+              {/* Switch Auth Mode */}
+              <div className="text-center animate-fade-in-up" style={{ animationDelay: '800ms' }}>
+                <p className="text-gray-600">
+                  {isLogin ? "Don't have an account? " : "Already have an account? "}
+                  <button
+                    type="button"
+                    onClick={toggleAuthMode}
+                    className="text-blue-600 hover:text-blue-500 font-semibold transition-colors duration-300"
+                  >
+                    {isLogin ? "Sign up" : "Sign in"}
+                  </button>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Background Animation */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-float opacity-20"
+            style={{
+              width: `${Math.random() * 10 + 5}px`,
+              height: `${Math.random() * 10 + 5}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              backgroundColor: ['#3B82F6', '#10B981', '#6366F1', '#06B6D4', '#8B5CF6'][i % 5],
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${Math.random() * 20 + 10}s`
+            }}
+          />
+        ))}
+      </div>
+
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+          }
+          33% {
+            transform: translateY(-20px) translateX(10px) rotate(120deg);
+          }
+          66% {
+            transform: translateY(10px) translateX(-10px) rotate(240deg);
+          }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+          opacity: 0;
+        }
+        .animate-float {
+          animation: float 15s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
   );
 }
-
-export default Login;
