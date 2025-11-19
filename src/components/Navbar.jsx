@@ -1,19 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
-import ArchiveDop from "./ArchiveDop.jsx";
 
 const Navbar = () => {
   const navRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const [isHomeDropdownOpen, setIsHomeDropdownOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  const toggleHomeDropdown = () => setIsHomeDropdownOpen(!isHomeDropdownOpen);
+  const closeHomeDropdown = () => setIsHomeDropdownOpen(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setIsOpen(false);
+        setIsHomeDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -81,9 +85,60 @@ const Navbar = () => {
             transition-all duration-300 ease-in-out
           `}
         >
-          <li><ArchiveDop closeMenu={closeMenu} /></li>
-
-         
+          {/* Home Dropdown */}
+          <li className="relative">
+            <Link to="/"
+              onClick={toggleHomeDropdown}
+              className="flex items-center text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full lg:w-auto"
+            >
+              Home
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-4 w-4 ml-1 transition-transform duration-200 ${
+                  isHomeDropdownOpen ? "rotate-180" : ""
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </Link>
+            
+            {/* Dropdown Menu */}
+            <div
+              className={`
+                ${isHomeDropdownOpen ? "block" : "hidden"}
+                absolute lg:absolute
+                top-full left-0 lg:left-0
+                w-full lg:w-48
+                bg-white
+                border border-gray-200
+                rounded-lg
+                shadow-lg
+                py-2
+                z-50
+                mt-1
+              `}
+            >
+              
+              <Link
+                to="/homepage2"
+                onClick={() => {
+                  closeHomeDropdown();
+                  closeMenu();
+                }}
+                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200"
+              >
+                Home2
+              </Link>
+            </div>
+          </li>
 
           <li>
             <Link
@@ -94,8 +149,6 @@ const Navbar = () => {
               Dashboard
             </Link>
           </li>
-
-          
 
           <li>
             <Link

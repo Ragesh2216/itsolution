@@ -79,7 +79,7 @@ export default function ITService() {
         "Network design & optimization",
         "IT budget optimization"
       ],
-      stats: "Managing 300+ IT systems",
+      stats: "Managing 300+ project ",
       color: "from-orange-500 to-red-500",
       hoverColor: "from-orange-600 to-red-600",
       iconColor: "text-orange-400"
@@ -115,7 +115,7 @@ export default function ITService() {
         "Automated testing & deployment",
         "Performance monitoring"
       ],
-      stats: "Reduced deployment time by 70%",
+      stats: "Reduced deployment time 70%",
       color: "from-teal-500 to-blue-500",
       hoverColor: "from-teal-600 to-blue-600",
       iconColor: "text-teal-400"
