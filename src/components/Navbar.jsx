@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import logo from "../images/logo.png";
+import logo from "../images/logo.webp";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -8,10 +8,16 @@ const Navbar = () => {
   const [isHomeDropdownOpen, setIsHomeDropdownOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  const closeMenu = () => {
+    setIsOpen(false);
+    setIsHomeDropdownOpen(false);
+  };
 
   const toggleHomeDropdown = () => setIsHomeDropdownOpen(!isHomeDropdownOpen);
   const closeHomeDropdown = () => setIsHomeDropdownOpen(false);
+   const handleLogoClick = () => {
+    closeMenu(); // Close menu when logo is clicked
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,9 +36,13 @@ const Navbar = () => {
         ref={navRef}
         className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-7xl mx-auto relative"
       >
-        {/* Logo */}
-        <div className="z-50">
-          <Link to="/" className="hover:opacity-80 transition-opacity duration-200">
+       {/* Logo - Added onClick handler */}
+       <div className="z-50">
+          <Link 
+            to="/" 
+            onClick={handleLogoClick}
+            className="hover:opacity-80 transition-opacity duration-200"
+          >
             <img src={logo} width={130} alt="Site Logo" />
           </Link>
         </div>
@@ -86,10 +96,10 @@ const Navbar = () => {
           `}
         >
           {/* Home Dropdown */}
-          <li className="relative">
-            <Link to="/"
+          <li className="relative w-full lg:w-auto">
+            <button
               onClick={toggleHomeDropdown}
-              className="flex items-center text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full lg:w-auto"
+              className="flex items-center justify-center lg:justify-start py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full lg:w-auto"
             >
               Home
               <svg
@@ -108,13 +118,13 @@ const Navbar = () => {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-            </Link>
+            </button>
             
             {/* Dropdown Menu */}
             <div
               className={`
                 ${isHomeDropdownOpen ? "block" : "hidden"}
-                absolute lg:absolute
+                lg:absolute
                 top-full left-0 lg:left-0
                 w-full lg:w-48
                 bg-white
@@ -126,75 +136,84 @@ const Navbar = () => {
                 mt-1
               `}
             >
-              
+              <Link
+                to="/"
+                onClick={() => {
+                  closeHomeDropdown();
+                  closeMenu();
+                }}
+                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 text-center lg:text-left"
+              >
+                Home1
+              </Link>
               <Link
                 to="/homepage2"
                 onClick={() => {
                   closeHomeDropdown();
                   closeMenu();
                 }}
-                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200"
+                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 text-center lg:text-left"
               >
                 Home2
               </Link>
             </div>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/dashboards"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
             >
               Dashboard
             </Link>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/subscription"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
             >
               Subscription
             </Link>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/about"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
             >
               About
             </Link>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/services"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
             >
               Services
             </Link>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/contact"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
             >
               Contact
             </Link>
           </li>
 
-          <li>
+          <li className="w-full lg:w-auto">
             <Link
               to="/login"
               onClick={closeMenu}
-              className="block text-center lg:text-left bg-white text-purple-700 hover:bg-gray-100 hover:text-purple-800 transition-colors duration-200 py-2 px-6 rounded-lg font-semibold"
+              className="block text-center lg:text-left bg-white text-purple-700 hover:bg-gray-100 hover:text-purple-800 transition-colors duration-200 py-2 px-6 rounded-lg font-semibold w-full lg:w-auto"
             >
               Login
             </Link>

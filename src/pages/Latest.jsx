@@ -1,13 +1,47 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Latest() {
   const [activeTab, setActiveTab] = useState("all");
   const [visibleItems, setVisibleItems] = useState(6);
   const [isVisible, setIsVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Mock function for newsletter subscription
+  const subscribeToNewsletter = async (email) => {
+    // Simulate API call
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (email.includes('@')) {
+          resolve({ success: true });
+        } else {
+          reject(new Error('Invalid email'));
+        }
+      }, 1500);
+    });
+  };
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      await subscribeToNewsletter(email);
+      setMessage({ type: 'success', text: 'Successfully subscribed!' });
+      setEmail('');
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Subscription failed. Please try again.' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // IT Solutions Latest Updates Data
   const latestUpdates = [
@@ -141,7 +175,7 @@ function Latest() {
         {/* Header Section */}
         <div className={`text-center mt-20 mb-12 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Stackly  IT Solutions
+            Stackly IT Solutions
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Stay updated with the latest technology innovations, framework releases, and IT solution updates from our team.
@@ -170,35 +204,7 @@ function Latest() {
           </div>
         </div>
 
-        {/* Category Tabs */}
-        <div className={`mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex overflow-x-auto pb-4 hide-scrollbar space-x-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  setActiveTab(category.id);
-                  setVisibleItems(6);
-                }}
-                className={`flex-shrink-0 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  activeTab === category.id
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                {category.name}
-                <span className={`ml-2 text-sm px-2 py-1 rounded-full ${
-                  activeTab === category.id
-                    ? 'bg-white text-blue-600'
-                    : 'bg-gray-100 text-gray-600'
-                }`}>
-                  {category.count}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-
+       
         {/* Updates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredUpdates.map((update, index) => (
@@ -278,7 +284,7 @@ function Latest() {
         )}
 
         {/* Newsletter Section */}
-        <div className={`bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-8 text-center text-white mb-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <form onSubmit={handleSubscribe} className={`bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-8 text-center text-white mb-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated</h2>
           <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
             Get the latest IT solutions and technology updates delivered directly to your inbox.
@@ -287,13 +293,28 @@ function Latest() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-gray-900"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              className="flex-1 px-4 py-3 rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-gray-900 disabled:opacity-50"
             />
-            <button className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300">
-              Subscribe
-            </button>
+            <Link to="/404" 
+              type="submit"
+              disabled={isLoading}
+              className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              {isLoading ? 'Subscribing...' : 'Subscribe'}
+            </Link >
           </div>
-        </div>
+          {message.text && (
+            <p className={`mt-4 text-sm font-medium ${
+              message.type === 'success' ? 'text-green-300' : 'text-red-300'
+            }`}>
+              {message.text}
+            </p>
+          )}
+        </form>
 
         {/* Quick Links */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">

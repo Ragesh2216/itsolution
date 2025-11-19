@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import sakthi from '../images/sakthi.webp';
-import abi from '../images/abi.webp.jpg';
+import abi from '../images/abi.webp';
 import dhara from '../images/dhara.webp';
 import yuva from '../images/yuva.webp';
 import { Link, useNavigate } from "react-router-dom";

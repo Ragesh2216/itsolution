@@ -123,7 +123,7 @@ const Login = () => {
                     Welcome Back
                   </h1>
                   <p className="text-white/70 text-sm">
-                    Sign in to your account to continue
+                    Login  in to your account to continue
                   </p>
                 </div>
 
@@ -182,7 +182,7 @@ const Login = () => {
                     type="submit"
                     className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 rounded-2xl font-semibold hover:from-purple-600 hover:to-pink-600 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
                   >
-                    SIGN IN
+                    LOGIN IN
                   </button>
                 </form>
 
@@ -314,7 +314,7 @@ const Login = () => {
                       onClick={flipAgain}
                       className="text-cyan-300 font-semibold hover:text-cyan-200 transition-colors duration-200 underline"
                     >
-                      Sign in
+                      Login in
                     </button>
                   </p>
                 </div>

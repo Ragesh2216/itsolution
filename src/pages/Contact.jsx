@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +19,16 @@ const Contact = () => {
     setIsVisible(true);
   }, []);
 
+  // Add this useEffect to scroll to top when form is submitted
+  useEffect(() => {
+    if (isSubmitted) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [isSubmitted]); // This will run every time isSubmitted changes
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -29,6 +39,12 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Scroll to top immediately when form starts submitting
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
     
     // Simulate form submission
     setTimeout(() => {
@@ -65,21 +81,29 @@ const Contact = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-400">
               <button
-                onClick={() => setIsSubmitted(false)}
+                onClick={() => {
+                  setIsSubmitted(false);
+                  // Scroll to form section when clicking "Submit Another Inquiry"
+                  setTimeout(() => {
+                    const formSection = document.querySelector('form');
+                    if (formSection) {
+                      formSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 100);
+                }}
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
               >
                 Submit Another Inquiry
               </button>
-              <button
-                onClick={() => window.location.href = '/'}
-                className="border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+              <Link
+                to="/"
+                className="border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 text-center"
               >
                 Back to Home
-              </button>
+              </Link>
             </div>
           </div>
         </div>
-        
       </div>
     );
   }
@@ -413,8 +437,6 @@ const Contact = () => {
           </div>
         </section>
       </main>
-
-      
 
       {/* CSS Animations */}
       <style jsx global>{`
