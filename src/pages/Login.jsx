@@ -163,19 +163,7 @@ const Login = () => {
                     </button>
                   </div>
 
-                  {/* Remember Me & Forgot Password */}
-                  <div className="flex justify-between items-center text-sm">
-                    <label className="flex items-center text-white/70 cursor-pointer hover:text-white transition-colors duration-200">
-                      <input 
-                        type="checkbox" 
-                        className="mr-2 rounded bg-white/10 border-white/20 text-purple-500 focus:ring-purple-400"
-                      />
-                      Remember me
-                    </label>
-                    <a href="./404" className="text-purple-300 hover:text-purple-200 transition-colors duration-200 font-medium">
-                      Forgot Password?
-                    </a>
-                  </div>
+                  
 
                   {/* Submit Button */}
                   <button

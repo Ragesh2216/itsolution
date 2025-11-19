@@ -742,9 +742,9 @@ const Home = () => {
                   <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     {post.description}
                   </p>
-                  <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                  <Link to="/404" className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
                     Read More →
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

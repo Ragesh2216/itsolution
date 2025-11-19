@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
 export default function ITService() {
   const [activeService, setActiveService] = useState(0);
   const [isHovered, setIsHovered] = useState(null);
@@ -198,14 +197,15 @@ export default function ITService() {
                 key={index}
                 className={`bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 ${
                   isHovered === index ? 'border-blue-500' : 'border-transparent'
-                } group relative`}
+                } group relative flex flex-col h-full`}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
               >
                 {/* Animated gradient overlay */}
                 <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                 
-                <div className={`p-8 bg-gradient-to-r ${service.color} text-white relative overflow-hidden group-hover:bg-gradient-to-r ${service.hoverColor} transition-all duration-500`}>
+                {/* Header Section - Fixed height */}
+                <div className={`p-8 bg-gradient-to-r ${service.color} text-white relative overflow-hidden group-hover:bg-gradient-to-r ${service.hoverColor} transition-all duration-500 min-h-[180px] flex flex-col justify-center`}>
                   {/* Subtle shimmer effect */}
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                   
@@ -213,15 +213,16 @@ export default function ITService() {
                     <div className={`text-3xl transform group-hover:scale-110 transition-transform duration-300 ${service.iconColor}`}>
                       {service.icon}
                     </div>
-                    <h2 className="text-2xl font-bold">{service.title}</h2>
+                    <h2 className="text-2xl font-bold leading-tight">{service.title}</h2>
                   </div>
-                  <p className="text-blue-100 text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
+                  <p className="text-blue-100 text-lg leading-relaxed group-hover:text-white transition-colors duration-300 line-clamp-3">
                     {service.description}
                   </p>
                 </div>
                 
-                <div className="p-6 relative">
-                  <div className="mb-6">
+                {/* Content Section - Flexible but consistent */}
+                <div className="p-6 relative flex-1 flex flex-col">
+                  <div className="mb-6 flex-1">
                     <h3 className="font-semibold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors duration-300">
                       Key Features:
                     </h3>
@@ -229,25 +230,26 @@ export default function ITService() {
                       {service.features.map((feature, featureIndex) => (
                         <li 
                           key={featureIndex} 
-                          className="flex items-center gap-3 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 transform group-hover:translate-x-1 transition-transform"
+                          className="flex items-start gap-3 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 transform group-hover:translate-x-1 transition-transform"
                           style={{ transitionDelay: `${featureIndex * 100}ms` }}
                         >
-                          <span className={`${service.iconColor} transform group-hover:scale-125 transition-transform duration-300`}>
+                          <span className={`${service.iconColor} transform group-hover:scale-125 transition-transform duration-300 flex-shrink-0 mt-0.5`}>
                             ✓
                           </span>
-                          <span>{feature}</span>
+                          <span className="text-sm leading-relaxed">{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div className="flex items-center justify-between">
+                  {/* Footer - Fixed at bottom */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
                     <span className="text-sm text-gray-500 font-medium group-hover:text-gray-700 transition-colors duration-300">
                       {service.stats}
                     </span>
                     <Link
                       to={service.detailsLink}
-                      className={`bg-gradient-to-r ${service.color} hover:${service.hoverColor} text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg`}
+                      className={`bg-gradient-to-r ${service.color} hover:${service.hoverColor} text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-sm whitespace-nowrap`}
                     >
                       {service.buttonText}
                     </Link>
@@ -314,7 +316,7 @@ export default function ITService() {
                   <h3 className="font-bold text-gray-900 mb-2 group-hover:text-gray-800 transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300">
+                  <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -463,7 +465,21 @@ export default function ITService() {
         </section>
       </main>
 
-      
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      `}</style>
     </div>
   );
 }

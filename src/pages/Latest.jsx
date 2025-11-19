@@ -204,7 +204,11 @@ function Latest() {
           </div>
         </div>
 
-       
+        
+  
+            
+        
+
         {/* Updates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredUpdates.map((update, index) => (
@@ -261,10 +265,13 @@ function Latest() {
                   <span className="text-sm text-gray-500">
                     {formatDate(update.date)}
                   </span>
-                  <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform duration-300">
+                  <Link 
+                    to="/404" 
+                    className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform duration-300"
+                  >
                     <span>Read More</span>
                     <span>→</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -296,16 +303,16 @@ function Latest() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
+              
               className="flex-1 px-4 py-3 rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-gray-900 disabled:opacity-50"
             />
-            <Link to="/404" 
+            <button
               type="submit"
-              disabled={isLoading}
+              
               className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {isLoading ? 'Subscribing...' : 'Subscribe'}
-            </Link >
+              Subscribe
+            </button>
           </div>
           {message.text && (
             <p className={`mt-4 text-sm font-medium ${
