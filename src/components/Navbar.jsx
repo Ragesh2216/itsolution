@@ -96,69 +96,68 @@ const Navbar = () => {
           `}
         >
           {/* Home Dropdown */}
-<li className="relative w-full lg:w-auto">
-  <div className="flex items-center">
-    <Link 
-      to="/"
-      onClick={() => {
-        closeHomeDropdown();
-        closeMenu();
-      }}
-      className="flex items-center justify-center lg:justify-start py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full lg:w-auto"
-    >
-      Home
-    </Link>
-    <button
-      onClick={toggleHomeDropdown}
-      className="p-2 hover:bg-gray-100 lg:hover:bg-white/20 rounded-lg transition-colors duration-200"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={`h-4 w-4 transition-transform duration-200 ${
-          isHomeDropdownOpen ? "rotate-180" : ""
-        }`}
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19 9l-7 7-7-7"
-        />
-      </svg>
-    </button>
-  </div>
-  
-  {/* Dropdown Menu */}
-  <div
-    className={`
-      ${isHomeDropdownOpen ? "block" : "hidden"}
-      lg:absolute
-      top-full left-0 lg:left-0
-      w-full lg:w-48
-      bg-white
-      border border-gray-200
-      rounded-lg
-      shadow-lg
-      py-2
-      z-50
-      mt-1
-    `}
-  >
-    <Link
-      to="/homepage2"
-      onClick={() => {
-        closeHomeDropdown();
-        closeMenu();
-      }}
-      className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 text-center lg:text-left"
-    >
-      Home2
-    </Link>
-  </div>
-</li>
+          <li className="relative w-full lg:w-auto">
+            <div className="flex items-center justify-center lg:justify-start lg:mr-4 lg:translate-x-4">
+              <Link 
+                to="/"
+                onClick={() => {
+                  closeHomeDropdown();
+                  closeMenu();
+                }}
+                 className="flex items-center justify-center lg:justify-start lg:mr-4"> 
+                Home
+              </Link>
+              <button
+                onClick={toggleHomeDropdown}
+                className="p-2 hover:bg-gray-100 lg:hover:bg-white/20 rounded-lg transition-colors duration-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isHomeDropdownOpen ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Dropdown Menu */}
+            <div
+              className={`
+                ${isHomeDropdownOpen ? "block" : "hidden"}
+                lg:absolute
+                top-full left-0 lg:left-0
+                w-full lg:w-48
+                bg-white
+                border border-gray-200
+                rounded-lg
+                shadow-lg
+                py-2
+                z-50
+                mt-1
+              `}
+            >
+              <Link
+                to="/homepage2"
+                onClick={() => {
+                  closeHomeDropdown();
+                  closeMenu();
+                }}
+                className="block py-2 px-4 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 text-center lg:text-left"
+              >
+                Home2
+              </Link>
+            </div>
+          </li>
 
           <li className="w-full lg:w-auto">
             <Link
@@ -224,5 +223,5 @@ const Navbar = () => {
     </header>
   );
 };
-
+ 
 export default Navbar;
