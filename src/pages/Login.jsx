@@ -206,24 +206,7 @@ export default function Login() {
                 />
               </div>
 
-              {/* Confirm Password - Only for Signup */}
-              {!isLogin && (
-                <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm Password *
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    required={!isLogin}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
-                    placeholder="••••••••"
-                  />
-                </div>
-              )}
+             
 
               {/* Checkboxes */}
               <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '400ms' }}>

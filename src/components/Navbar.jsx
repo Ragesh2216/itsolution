@@ -97,7 +97,7 @@ const Navbar = () => {
         >
           {/* Home Dropdown */}
           <li className="relative w-full lg:w-auto">
-            <div className="flex items-center justify-center lg:justify-start lg:mr-4 lg:translate-x-4">
+            <div className="flex items-center justify-center lg:justify-start lg:mr-2 lg:translate-x-4">
               <Link 
                 to="/"
                 onClick={() => {
