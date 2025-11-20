@@ -7,6 +7,7 @@ import editorialImage from "../images/editorial.webp";
 import trainingImage from "../images/training.webp";
 import prImage from "../images/pr.webp";
 import podcastImage from "../images/podcast.webp";
+import { Link } from "react-router-dom";
 
 // IT Solutions service data
 const servicesData = [
@@ -376,9 +377,9 @@ const ExploreServices = () => {
             <p className="text-white/80 mb-6 max-w-2xl mx-auto">
               Our team of experts can design and implement tailored technology solutions to meet your specific business requirements.
             </p>
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <Link to="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-lg">
               Contact Our IT Experts
-            </button>
+            </Link>
           </div>
         </div>
       </div>
