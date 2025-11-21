@@ -190,40 +190,53 @@ export default function Login() {
               </div>
 
               {/* Password Field */}
-              <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password *
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
-                  placeholder="••••••••"
-                />
-              </div>
+<div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+    Password *
+  </label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+    value={formData.password}
+    onChange={handleInputChange}
+    required
+    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
+    placeholder="••••••••"
+  />
+</div>
 
-              {/* Confirm Password - Only for Signup */}
-              {!isLogin && (
-                <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm Password *
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    required={!isLogin}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400"
-                    placeholder="••••••••"
-                  />
-                </div>
-              )}
+{/* Confirm Password - Only for Signup */}
+{!isLogin && (
+  <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+      Confirm Password *
+    </label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      value={formData.confirmPassword}
+      onChange={handleInputChange}
+      required={!isLogin}
+      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-400 ${
+        formData.confirmPassword && formData.password !== formData.confirmPassword
+          ? 'border-red-500 ring-2 ring-red-200'
+          : 'border-gray-300'
+      }`}
+      placeholder="••••••••"
+    />
+    {/* Error message */}
+    {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+      <p className="text-red-500 text-xs mt-2 flex items-center">
+        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+        </svg>
+        Passwords do not match
+      </p>
+    )}
+  </div>
+)}
 
               {/* Checkboxes */}
               <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
