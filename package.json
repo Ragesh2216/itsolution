@@ -1,7 +1,7 @@
 {
   "name": "your-project",
   "version": "1.0.0",
-  "homepage": "https://Ragesh2216.github.io/ itsolution/",
+  "homepage": "https://Ragesh2216.github.io/itsolution/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
