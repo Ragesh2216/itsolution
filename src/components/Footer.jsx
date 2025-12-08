@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -21,25 +22,27 @@ const Footer = () => {
         {/* Company Info */}
         <div className="lg:col-span-1 text-center md:text-left">
           <div className="flex justify-center md:justify-start">
-            <img src={logoPlaceholderUrl} width={120} className="mb-4" alt="Stackly IT Solutions" />
+            <Link to="/">
+              <img src={logoPlaceholderUrl} width={120} className="mb-4" alt="Stackly IT Solutions" />
+            </Link>
           </div>
           <p className="text-sm text-gray-400 leading-relaxed mb-4">
             Your trusted partner for comprehensive IT solutions. We deliver cutting-edge technology services including cloud computing, cybersecurity, software development, and digital transformation.
           </p>
           <div className="flex justify-center md:justify-start space-x-4">
             {[
-              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" />, url: "/404" },
-              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" />, url: "/404" },
-              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" />, url: "/404" },
-              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" />, url: "/404" }
+              { icon: <TwitterIcon className="hover:text-blue-400 transition-colors duration-200" /> },
+              { icon: <LinkedInIcon className="hover:text-blue-600 transition-colors duration-200" /> },
+              { icon: <GitHubIcon className="hover:text-gray-100 transition-colors duration-200" /> },
+              { icon: <InstagramIcon className="hover:text-pink-500 transition-colors duration-200" /> }
             ].map((social, index) => (
-              <a
+              <Link
                 key={index}
-                href={social.url}
+                to="/404"
                 className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors duration-200"
               >
                 {social.icon}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -49,20 +52,20 @@ const Footer = () => {
           <h5 className="text-white text-lg font-semibold mb-6">Our Services</h5>
           <ul className="space-y-3">
             {[
-              { label: "Cloud Solutions", url: "/services" },
-              { label: "Cybersecurity", url: "/services" },
-              { label: "Web Development", url: "/services" },
-              { label: "Mobile Apps", url: "/services" },
-              { label: "IT Consulting", url: "/services" },
-              { label: "Data Analytics", url: "/services" }
+              { label: "Cloud Solutions" },
+              { label: "Cybersecurity" },
+              { label: "Web Development" },
+              { label: "Mobile Apps" },
+              { label: "IT Consulting" },
+              { label: "Data Analytics" }
             ].map((service, index) => (
               <li key={index}>
-                <a 
-                  href={service.url} 
+                <Link 
+                  to="/404" 
                   className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm font-normal block py-1"
                 >
                   {service.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -81,12 +84,12 @@ const Footer = () => {
               { label: "Signup", url: "/login" }
             ].map((link, index) => (
               <li key={index}>
-                <a 
-                  href={link.url} 
+                <Link 
+                  to={link.url}
                   className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm font-normal block py-1"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -106,28 +109,26 @@ const Footer = () => {
             </div>
             
             <div className="flex justify-center md:justify-start">
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=MMR+COMPLEX,+Salem,+Tamil+Nadu+636008"
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/404"
                 className="text-sky-400 hover:text-sky-300 underline text-sm"
               >
                 View on Google Maps
-              </a>
+              </Link>
             </div>
             
             <div className="flex justify-center md:justify-start items-center space-x-3">
               <PhoneIcon className="w-5 h-5 text-blue-400 flex-shrink-0" />
-              <a href="tel:+911234567890" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <Link to="/404" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
                 +91 12345 67890
-              </a>
+              </Link>
             </div>
             
             <div className="flex justify-center md:justify-start items-center space-x-3">
               <EmailIcon className="w-5 h-5 text-blue-400 flex-shrink-0" />
-              <a href="mailto:info@stacklyit.com" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <Link to="/404" className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200">
                 info@stacklyit.com
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -148,18 +149,18 @@ const Footer = () => {
           {/* Legal Links */}
           <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
             {[
-              { label: "Privacy Policy", url: "/404" },
-              { label: "Terms of Service", url: "/404" },
-              { label: "Cookie Policy", url: "/404" },
-              { label: "Sitemap", url: "/404" }
+              { label: "Privacy Policy" },
+              { label: "Terms of Service" },
+              { label: "Cookie Policy" },
+              { label: "Sitemap" }
             ].map((link, index) => (
-              <a
+              <Link
                 key={index}
-                href={link.url}
+                to="/404"
                 className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
