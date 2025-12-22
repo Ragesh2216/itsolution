@@ -1,400 +1,559 @@
-import React, { useState, useEffect } from "react";
-import investigationImage from "../images/investigation.webp";
-import broadcastImage from "../images/broadcast.webp";
-import digitalstoryImage from "../images/digitalstory.webp";
-import photojournalismImage from "../images/photojournalism.webp";
-import editorialImage from "../images/editorial.webp";
-import trainingImage from "../images/training.webp";
-import prImage from "../images/pr.webp";
-import podcastImage from "../images/podcast.webp";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-// IT Solutions service data
-const servicesData = [
-  {
-    id: 1,
-    title: "Cloud Solutions",
-    category: "Infrastructure",
-    description:
-      "Comprehensive cloud migration, deployment, and management services across AWS, Azure, and Google Cloud platforms.",
-    image: investigationImage,
-    color: "from-purple-500 to-pink-500",
-    hoverColor: "from-purple-600 to-pink-600",
-    icon: "☁️"
-  },
-  {
-    id: 2,
-    title: "Cybersecurity",
-    category: "Security",
-    description:
-      "End-to-end security solutions including threat detection, vulnerability assessment, and enterprise protection systems.",
-    image: broadcastImage,
-    color: "from-blue-500 to-cyan-500",
-    hoverColor: "from-blue-600 to-cyan-600",
-    icon: "🛡️"
-  },
-  {
-    id: 3,
-    title: "Web Development",
-    category: "Development",
-    description:
-      "Custom web applications, e-commerce solutions, and responsive websites built with modern frameworks and technologies.",
-    image: digitalstoryImage,
-    color: "from-green-500 to-emerald-500",
-    hoverColor: "from-green-600 to-emerald-600",
-    icon: "💻"
-  },
-  {
-    id: 4,
-    title: "Data Analytics",
-    category: "Analytics",
-    description:
-      "Transform raw data into actionable insights with advanced analytics, BI tools, and machine learning solutions.",
-    image: photojournalismImage,
-    color: "from-orange-500 to-red-500",
-    hoverColor: "from-orange-600 to-red-600",
-    icon: "📊"
-  },
-  {
-    id: 5,
-    title: "IT Consulting",
-    category: "Consulting",
-    description:
-      "Strategic IT planning, digital transformation, and technology roadmap development for businesses of all sizes.",
-    image: editorialImage,
-    color: "from-indigo-500 to-purple-500",
-    hoverColor: "from-indigo-600 to-purple-600",
-    icon: "📋"
-  },
-  {
-    id: 6,
-    title: "IT Training & Workshops",
-    category: "Training",
-    description:
-      "Empower your team with skills in cloud computing, cybersecurity, programming, and emerging technologies.",
-    image: trainingImage,
-    color: "from-teal-500 to-blue-500",
-    hoverColor: "from-teal-600 to-blue-600",
-    icon: "👨‍🏫"
-  },
-  {
-    id: 7,
-    title: "Network Solutions",
-    category: "Infrastructure",
-    description:
-      "Design, implement, and manage robust network infrastructure for optimal performance and security.",
-    image: prImage,
-    color: "from-pink-500 to-rose-500",
-    hoverColor: "from-pink-600 to-rose-600",
-    icon: "🌐"
-  },
-  {
-    id: 8,
-    title: "Mobile App Development",
-    category: "Development",
-    description:
-      "Create powerful mobile applications for iOS and Android platforms with seamless user experiences.",
-    image: podcastImage,
-    color: "from-yellow-500 to-orange-500",
-    hoverColor: "from-yellow-600 to-orange-600",
-    icon: "📱"
-  },
-  {
-    id: 9,
-    title: "DevOps Services",
-    category: "Development",
-    description:
-      "Streamline development workflows with CI/CD pipelines, containerization, and automation solutions.",
-    image: investigationImage,
-    color: "from-blue-500 to-indigo-500",
-    hoverColor: "from-blue-600 to-indigo-600",
-    icon: "⚙️"
-  },
-  {
-    id: 10,
-    title: "AI & Machine Learning",
-    category: "Analytics",
-    description:
-      "Leverage artificial intelligence and machine learning to drive innovation and business intelligence.",
-    image: broadcastImage,
-    color: "from-purple-500 to-blue-500",
-    hoverColor: "from-purple-600 to-blue-600",
-    icon: "🤖"
-  },
-  {
-    id: 11,
-    title: "IT Support & Maintenance",
-    category: "Support",
-    description:
-      "24/7 technical support, system maintenance, and proactive monitoring for uninterrupted operations.",
-    image: digitalstoryImage,
-    color: "from-green-500 to-teal-500",
-    hoverColor: "from-green-600 to-teal-600",
-    icon: "🔧"
-  },
-  {
-    id: 12,
-    title: "Digital Transformation",
-    category: "Consulting",
-    description:
-      "Guide your business through digital evolution with cutting-edge technologies and strategic implementation.",
-    image: photojournalismImage,
-    color: "from-orange-500 to-yellow-500",
-    hoverColor: "from-orange-600 to-yellow-600",
-    icon: "🚀"
-  }
-];
+// Import icons from react-icons
+import { 
+  FaCloud, FaShieldAlt, FaCode, FaDatabase, 
+  FaNetworkWired, FaMobileAlt, FaRobot, FaChartLine,
+  FaLaptopCode, FaServer, FaCogs, FaBrain
+} from "react-icons/fa";
+import { Explore } from "@mui/icons-material";
 
 const ExploreServices = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [isVisible, setIsVisible] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeService, setActiveService] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  
+  // Refs for animations
+  const heroRef = useRef(null);
+  const servicesRef = useRef(null);
+  const featuresRef = useRef(null);
+  const testimonialsRef = useRef(null);
+  const ctaRef = useRef(null);
 
+  // Mouse tracking for parallax effects
   useEffect(() => {
-    setIsVisible(true);
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight
+      });
+    };
+
+    const handleScroll = () => {
+      const totalHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const categories = ["All", "Infrastructure", "Security", "Development", "Analytics", "Consulting", "Training", "Support"];
+  // Modern IT Services
+  const services = [
+    {
+      id: 1,
+      title: "Cloud Solutions",
+      description: "Scalable cloud infrastructure with seamless migration and management",
+      icon: <FaCloud />,
+      color: "from-blue-500 to-cyan-500",
+      stats: { uptime: "99.9%", clients: "500+" }
+    },
+    {
+      id: 2,
+      title: "Cybersecurity",
+      description: "Advanced threat protection and enterprise security solutions",
+      icon: <FaShieldAlt />,
+      color: "from-green-500 to-emerald-500",
+      stats: { uptime: "100%", clients: "300+" }
+    },
+    {
+      id: 3,
+      title: "AI & ML Solutions",
+      description: "Intelligent automation and machine learning integration",
+      icon: <FaBrain />,
+      color: "from-purple-500 to-pink-500",
+      stats: { uptime: "99.8%", clients: "200+" }
+    },
+    {
+      id: 4,
+      title: "Data Analytics",
+      description: "Real-time insights and predictive analytics platforms",
+      icon: <FaDatabase />,
+      color: "from-orange-500 to-red-500",
+      stats: { uptime: "99.7%", clients: "400+" }
+    },
+    {
+      id: 5,
+      title: "DevOps Services",
+      description: "Automated CI/CD pipelines and container orchestration",
+      icon: <FaCogs />,
+      color: "from-indigo-500 to-blue-500",
+      stats: { uptime: "99.9%", clients: "350+" }
+    },
+    {
+      id: 6,
+      title: "IoT Solutions",
+      description: "Connected devices and smart infrastructure management",
+      icon: <FaNetworkWired />,
+      color: "from-teal-500 to-green-500",
+      stats: { uptime: "99.6%", clients: "250+" }
+    }
+  ];
 
-  const filteredServices = servicesData.filter((service) => {
-    const matchesCategory = filter === "All" || service.category === filter;
-    const matchesSearch = service.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Features
+  const features = [
+    {
+      title: "24/7 Monitoring",
+      description: "Round-the-clock system monitoring and instant alerts",
+      icon: "🔍",
+      delay: 0
+    },
+    {
+      title: "Scalable Architecture",
+      description: "Flexible solutions that grow with your business",
+      icon: "📈",
+      delay: 100
+    },
+    {
+      title: "Expert Support",
+      description: "Dedicated team of certified IT professionals",
+      icon: "👨‍💻",
+      delay: 200
+    },
+    {
+      title: "Fast Deployment",
+      description: "Rapid implementation with minimal downtime",
+      icon: "⚡",
+      delay: 300
+    }
+  ];
 
-  const categoryColors = {
-    "Infrastructure": "from-purple-500 to-pink-500",
-    "Security": "from-blue-500 to-cyan-500",
-    "Development": "from-green-500 to-emerald-500",
-    "Analytics": "from-orange-500 to-red-500",
-    "Consulting": "from-indigo-500 to-purple-500",
-    "Training": "from-teal-500 to-blue-500",
-    "Support": "from-yellow-500 to-orange-500"
-  };
+  // Testimonials
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "CTO, TechCorp",
+      content: "Their cloud migration transformed our operations. 99.9% uptime and incredible support.",
+      rating: 5
+    },
+    {
+      name: "Michael Chen",
+      role: "CEO, DataFlow",
+      content: "The AI integration gave us a competitive edge we never thought possible.",
+      rating: 5
+    },
+    {
+      name: "Emma Rodriguez",
+      role: "IT Director, GlobalSoft",
+      content: "Outstanding cybersecurity implementation. Our data has never been safer.",
+      rating: 5
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 py-16">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header Section */}
-        <div className={`text-center mb-12 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent animate-gradient">
-            IT Solutions & Services
-          </h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Comprehensive technology solutions to drive your business forward in the digital age
-          </p>
-          
-          {/* Stats */}
-          <div className="flex justify-center gap-8 mt-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
+      {/* Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transform origin-left z-50"
+           style={{ transform: `scaleX(${scrollProgress / 100})` }}></div>
+
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-5" 
+             style={{
+               backgroundImage: `linear-gradient(90deg, #fff 1px, transparent 1px),
+                                linear-gradient(#fff 1px, transparent 1px)`,
+               backgroundSize: '50px 50px'
+             }}></div>
+
+        {/* Floating Orbs */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-float-orb"
+            style={{
+              width: `${100 + Math.random() * 300}px`,
+              height: `${100 + Math.random() * 300}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: `radial-gradient(circle, ${
+                ['#3B82F6', '#8B5CF6', '#06B6D4', '#10B981'][i % 4]
+              }20 0%, transparent 70%)`,
+              animationDelay: `${i * 2}s`,
+              filter: 'blur(40px)'
+            }}
+          />
+        ))}
+
+        {/* Animated Particles */}
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={`particle-${i}`}
+            className="absolute w-1 h-1 bg-white rounded-full animate-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              opacity: Math.random() * 0.3 + 0.1
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Hero Section */}
+      <section 
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+        {/* Dynamic Background based on mouse */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+          <div className="absolute inset-0 opacity-30"
+               style={{
+                 backgroundImage: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, #3B82F6 0%, transparent 50%)`
+               }}>
+          </div>
+        </div>
+
+        <div className="relative z-10 text-center max-w-7xl mx-auto">
+          {/* Animated Title */}
+          <div className="mb-8">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 animate-gradient-shift">
+                Future-Ready
+              </span>
+              <span className="block mt-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 animate-gradient-shift-reverse">
+                IT Solutions
+              </span>
+            </h1>
+            
+            <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-text-reveal">
+              Transform your business with cutting-edge technology solutions that drive innovation, 
+              efficiency, and growth in the digital age.
+            </p>
+          </div>
+
+          {/* Interactive Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-12 max-w-2xl mx-auto">
             {[
-              { number: servicesData.length, label: "Services", color: "from-white to-blue-100" },
-              { number: categories.length - 1, label: "Categories", color: "from-white to-green-100" },
-              { number: "24/7", label: "Support", color: "from-white to-purple-100" }
+              { value: "99.9%", label: "Uptime", color: "from-green-400 to-emerald-500" },
+              { value: "500+", label: "Clients", color: "from-blue-400 to-cyan-500" },
+              { value: "24/7", label: "Support", color: "from-purple-400 to-pink-500" },
+              { value: "98%", label: "Satisfaction", color: "from-orange-400 to-red-500" }
             ].map((stat, index) => (
               <div 
                 key={index}
-                className="text-center group cursor-pointer transform hover:scale-110 transition-all duration-500"
+                className="relative group cursor-pointer"
+                onMouseEnter={() => console.log(`Hovered ${stat.label}`)}
               >
-                <div className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}>
-                  {stat.number}
+                <div className="absolute inset-0 bg-gradient-to-r rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
+                     style={{ background: `linear-gradient(to right, ${stat.color.split(' ')[1]}, ${stat.color.split(' ')[3]})` }}>
                 </div>
-                <div className="text-white/80 group-hover:text-white transition-colors duration-300">
-                  {stat.label}
+                <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 transform transition-all duration-500 group-hover:scale-105 group-hover:bg-gray-800/70 border border-gray-700/50 group-hover:border-transparent">
+                  <div className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                    {stat.value}
+                  </div>
+                  <div className="text-gray-400 text-sm mt-1">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up delay-500">
+            <Link
+              to="/contact"
+              className="group relative px-8 py-4 rounded-xl font-bold text-lg transition-all duration-500 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:from-blue-700 group-hover:to-purple-700"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                <span className="group-hover:rotate-180 transition-transform duration-500">🚀</span>
+                Start Your Digital Journey
+                <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
+              </div>
+            </Link>
+
+            <Link
+              to="#services"
+              className="group relative px-8 py-4 rounded-xl font-bold text-lg transition-all duration-500 overflow-hidden border border-gray-600 hover:border-transparent"
+            >
+              <div className="absolute inset-0 bg-gray-800/50 backdrop-blur-sm group-hover:bg-gray-800/70 transition-all duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 translate-x-[-100%] group-hover:translate-x-[100%] transition-all duration-1000"></div>
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                <span>💡</span>
+                Explore Solutions
+                <span className="group-hover:rotate-90 transition-transform duration-500">⚡</span>
+              </div>
+            </Link>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full mt-2 animate-scroll"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section 
+        id="services"
+        ref={servicesRef}
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full mb-4 border border-blue-500/30">
+              <span className="text-blue-400">💻</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
+                Cutting-Edge
+              </span>{" "}
+              IT Services
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Comprehensive technology solutions tailored to your business needs
+            </p>
+          </div>
+
+          {/* Interactive Service Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <div
+                key={service.id}
+                className="relative group perspective-1000"
+                onMouseEnter={() => setActiveService(service.id)}
+                onMouseLeave={() => setActiveService(null)}
+              >
+                <div className={`relative h-full rounded-2xl overflow-hidden transition-all duration-700 ${
+                  activeService === service.id ? 'rotate-y-0' : 'rotate-y-5'
+                }`}>
+                  {/* Front of Card */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 transition-all duration-500 group-hover:scale-105">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center text-2xl mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12`}>
+                      {service.icon}
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
+                        style={{ backgroundImage: `linear-gradient(to right, ${service.color.split(' ')[1]}, ${service.color.split(' ')[3]})` }}>
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-gray-400 mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+                    
+                    <div className="flex justify-between text-sm">
+                      <div>
+                        <div className="text-gray-500">Uptime</div>
+                        <div className="font-bold">{service.stats.uptime}</div>
+                      </div>
+                      <div>
+                        <div className="text-gray-500">Clients</div>
+                        <div className="font-bold">{service.stats.clients}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Back Glow Effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 rounded-2xl`}></div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Search & Filter Section */}
-        <div className={`bg-white/20 backdrop-blur-lg rounded-2xl shadow-lg p-6 mb-12 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="relative flex-1 w-full">
-              <input
-                type="text"
-                placeholder="Search IT services or technologies..."
-                className="w-full px-4 py-3 pl-12 border border-white/30 bg-white/20 backdrop-blur-sm rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200 hover:bg-white/30"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/70">
-                🔍
-              </div>
-            </div>
+      {/* Features Section */}
+      <section 
+        ref={featuresRef}
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent"></div>
 
-            <div className="relative w-full md:w-64">
-              <select
-                className="w-full px-4 py-3 pr-10 border border-white/30 bg-white/20 backdrop-blur-sm rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent appearance-none transition-all duration-200 hover:bg-white/30"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat} className="text-gray-800">
-                    {cat}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/70 pointer-events-none">
-                ⬇️
-              </div>
-            </div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              Why{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                Choose Us
+              </span>
+            </h2>
           </div>
-          
-          {/* Active Filters */}
-          {(searchTerm || filter !== "All") && (
-            <div className="mt-4 flex items-center gap-2 flex-wrap animate-fadeIn">
-              <span className="text-sm text-white/80">Active filters:</span>
-              {searchTerm && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/30 text-white backdrop-blur-sm transform hover:scale-105 transition-all duration-200">
-                  Search: "{searchTerm}"
-                  <button
-                    onClick={() => setSearchTerm("")}
-                    className="ml-2 hover:text-white/90 transition-colors duration-200"
-                  >
-                    ×
-                  </button>
-                </span>
-              )}
-              {filter !== "All" && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/30 text-white backdrop-blur-sm transform hover:scale-105 transition-all duration-200">
-                  Category: {filter}
-                  <button
-                    onClick={() => setFilter("All")}
-                    className="ml-2 hover:text-white/90 transition-colors duration-200"
-                  >
-                    ×
-                  </button>
-                </span>
-              )}
-              <button
-                onClick={() => {
-                  setSearchTerm("");
-                  setFilter("All");
-                }}
-                className="text-sm text-white/80 hover:text-white underline transition-colors duration-200 transform hover:scale-105"
-              >
-                Clear all
-              </button>
-            </div>
-          )}
-        </div>
 
-        {/* Service Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredServices.length > 0 ? (
-            filteredServices.map((service, index) => (
+          {/* Animated Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
               <div
-                key={service.id}
-                className="group relative bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/20 hover:border-white/40"
-                onMouseEnter={() => setHoveredCard(service.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{ 
-                  animationDelay: `${index * 100}ms`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
-                }}
+                key={index}
+                className="relative group"
+                style={{ animationDelay: `${feature.delay}ms` }}
               >
-                {/* Animated gradient border */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl -m-0.5`}></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
-                <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-2xl flex flex-col h-full m-0.5 overflow-hidden">
-                  {/* Image Container */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-30 group-hover:opacity-40 transition-opacity duration-500`}></div>
-                    
-                    {/* Icon overlay */}
-                    <div className="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <span className="text-xl">{service.icon}</span>
-                    </div>
-                    
-                    {/* Category badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm transform group-hover:scale-105 transition-transform duration-300">
-                        {service.category}
-                      </span>
-                    </div>
+                <div className="relative bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 transform transition-all duration-500 group-hover:-translate-y-2 group-hover:border-blue-500/30">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-500">
+                    {feature.icon}
                   </div>
                   
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex-1">
-                      <h2 className="text-xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
-                        {service.title}
-                        <span className="text-white/80 opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-1 transition-all duration-300">
-                          →
-                        </span>
-                      </h2>
-                      <p className="text-white/80 text-sm leading-relaxed group-hover:text-white/90 transition-colors duration-300">
-                        {service.description}
-                      </p>
-                    </div>
-                    
-                    <div className="mt-4 pt-4 border-t border-white/20 group-hover:border-white/30 transition-colors duration-300">
-                      <span className={`inline-block text-sm font-medium bg-gradient-to-r ${service.color} bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300`}>
-                        Get Solution
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Hover effect overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none`}></div>
+                  <h3 className="text-xl font-bold mb-3 text-gray-200">
+                    {feature.title}
+                  </h3>
+                  
+                  <p className="text-gray-400 leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-16 bg-white/10 backdrop-blur-lg rounded-2xl animate-pulse">
-              <div className="text-6xl mb-4 text-white/70">🔍</div>
-              <h3 className="text-2xl font-semibold text-white mb-2">No IT services found</h3>
-              <p className="text-white/70">Try adjusting your search or filter criteria</p>
-            </div>
-          )}
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section 
+        ref={testimonialsRef}
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              Client{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                Success Stories
+              </span>
+            </h2>
+          </div>
+
+          {/* 3D Testimonial Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="relative group"
+              >
+                <div className="relative bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 transform transition-all duration-500 group-hover:scale-105 group-hover:border-blue-500/30 h-full">
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className="text-yellow-400 text-xl">★</span>
+                    ))}
+                  </div>
+                  
+                  <p className="text-gray-300 italic text-lg mb-6 leading-relaxed">
+                    "{testimonial.content}"
+                  </p>
+                  
+                  <div className="border-t border-gray-700/50 pt-6">
+                    <div className="font-bold text-gray-200">{testimonial.name}</div>
+                    <div className="text-gray-400 text-sm">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section 
+        ref={ctaRef}
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/50 to-transparent"></div>
         </div>
 
-        {/* Results Count */}
-        {filteredServices.length > 0 && (
-          <div className="mt-8 text-center animate-fadeIn">
-            <p className="text-white/80 bg-white/10 backdrop-blur-sm inline-block px-6 py-3 rounded-full border border-white/20">
-              Showing <span className="font-semibold text-white">{filteredServices.length}</span> of{" "}
-              <span className="font-semibold text-white">{servicesData.length}</span> IT solutions
-            </p>
-          </div>
-        )}
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            Ready to{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
+              Transform
+            </span>{" "}
+            Your Business?
+          </h2>
+          
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Let's build the future together with innovative IT solutions
+          </p>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center animate-fadeIn">
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Need a Custom IT Solution?
-            </h3>
-            <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-              Our team of experts can design and implement tailored technology solutions to meet your specific business requirements.
-            </p>
-            <Link to="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-lg">
-              Contact Our IT Experts
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/contact"
+              className="group relative px-8 py-4 rounded-xl font-bold text-lg transition-all duration-500 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:from-blue-700 group-hover:to-purple-700"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                <span className="group-hover:rotate-180 transition-transform duration-500">💬</span>
+                Get Free Consultation
+                <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
+              </div>
+            </Link>
+
+            <Link
+              to="/latest"
+              className="group relative px-8 py-4 rounded-xl font-bold text-lg transition-all duration-500 overflow-hidden border border-gray-600 hover:border-transparent"
+            >
+              <div className="absolute inset-0 bg-gray-800/50 backdrop-blur-sm group-hover:bg-gray-800/70 transition-all duration-500"></div>
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                <span>📰</span>
+                View Case Studies
+                <span className="group-hover:rotate-90 transition-transform duration-500">⚡</span>
+              </div>
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
-      <style jsx>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+      {/* Custom CSS Animations */}
+      <style jsx global>{`
+        @keyframes floatOrb {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+          }
+          33% {
+            transform: translate(30px, -40px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 30px) scale(0.9);
+          }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+
+        @keyframes particle {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-1000px) rotate(720deg);
+            opacity: 0;
+          }
         }
-        @keyframes fadeInUp {
+
+        @keyframes gradientShift {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        @keyframes gradientShiftReverse {
+          0%, 100% {
+            background-position: 100% 50%;
+          }
+          50% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes textReveal {
           from {
             opacity: 0;
             transform: translateY(20px);
@@ -404,12 +563,119 @@ const ExploreServices = () => {
             transform: translateY(0);
           }
         }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 3s ease infinite;
+
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-out;
+
+        @keyframes bounceSlow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        @keyframes scroll {
+          0% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(10px);
+            opacity: 0;
+          }
+        }
+
+        .animate-float-orb {
+          animation: floatOrb 20s ease-in-out infinite;
+        }
+
+        .animate-particle {
+          animation: particle 15s linear infinite;
+        }
+
+        .animate-gradient-shift {
+          background-size: 200% 200%;
+          animation: gradientShift 3s ease infinite;
+        }
+
+        .animate-gradient-shift-reverse {
+          background-size: 200% 200%;
+          animation: gradientShiftReverse 3s ease infinite;
+        }
+
+        .animate-text-reveal {
+          animation: textReveal 1s ease-out forwards;
+        }
+
+        .animate-fade-up {
+          animation: fadeUp 0.8s ease-out forwards;
+          opacity: 0;
+        }
+
+        .animate-bounce-slow {
+          animation: bounceSlow 2s ease-in-out infinite;
+        }
+
+        .animate-scroll {
+          animation: scroll 2s ease-in-out infinite;
+        }
+
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+
+        .rotate-y-5 {
+          transform: rotateY(5deg);
+        }
+
+        .rotate-y-0 {
+          transform: rotateY(0deg);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+          scroll-behavior: smooth;
+          scroll-padding-top: 80px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #1f2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: linear-gradient(to bottom, #3B82F6, #8B5CF6);
+          border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(to bottom, #2563EB, #7C3AED);
+        }
+
+        /* Section fade-in on scroll */
+        section {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        section.in-view {
+          opacity: 1;
+          transform: translateY(0);
         }
       `}</style>
     </div>

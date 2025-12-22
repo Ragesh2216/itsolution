@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 function Latest() {
@@ -8,10 +8,56 @@ function Latest() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  
+  // Refs for scroll animations
+  const headerRef = useRef(null);
+  const updatesRef = useRef(null);
+  const newsletterRef = useRef(null);
+  const linksRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Initialize scroll animations
+    setupScrollAnimations();
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const setupScrollAnimations = () => {
+    // Initial check for elements in viewport
+    setTimeout(() => {
+      handleScroll();
+    }, 100);
+  };
+
+  const handleScroll = () => {
+    const elements = [
+      headerRef.current,
+      updatesRef.current,
+      newsletterRef.current,
+      linksRef.current
+    ];
+
+    elements.forEach((element) => {
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Check if element is in viewport
+        const isInViewport = rect.top <= windowHeight * 0.75 && rect.bottom >= 0;
+        
+        if (isInViewport) {
+          element.classList.add('scroll-visible');
+        }
+      }
+    });
+  };
 
   // Mock function for newsletter subscription
   const subscribeToNewsletter = async (email) => {
@@ -170,10 +216,13 @@ function Latest() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className={`text-center mt-20 mb-12 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div 
+          ref={headerRef}
+          className={`text-center mt-20 mb-12 scroll-section transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Stackly IT Solutions
           </h1>
@@ -204,78 +253,106 @@ function Latest() {
           </div>
         </div>
 
-        
-  
-            
-        
+        {/* Category Tabs */}
+        <div className="mb-12">
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => {
+                  setActiveTab(category.id);
+                  setVisibleItems(6);
+                }}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
+                  activeTab === category.id
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {category.name}
+                <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                  activeTab === category.id
+                    ? 'bg-white/20'
+                    : 'bg-gray-100 text-gray-600'
+                }`}>
+                  {category.count}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Updates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredUpdates.map((update, index) => (
-            <div
-              key={update.id}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden"
-              style={{
-                animationDelay: `${index * 100}ms`,
-                animation: 'fadeInUp 0.6s ease-out forwards'
-              }}
-            >
-              {/* Header with gradient */}
-              <div className={`h-2 bg-gradient-to-r ${update.color}`}></div>
-              
-              <div className="p-6">
-                {/* Icon and Category */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${update.color} flex items-center justify-center text-white text-xl`}>
-                      {update.image}
-                    </div>
-                    <div>
-                      <span className="inline-block px-3 py-1 text-xs font-semibold text-gray-600 bg-gray-100 rounded-full capitalize">
-                        {update.category}
-                      </span>
-                      <p className="text-sm text-gray-500 mt-1">{update.readTime}</p>
+        <div 
+          ref={updatesRef}
+          className="scroll-section"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {filteredUpdates.map((update, index) => (
+              <div
+                key={update.id}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                {/* Header with gradient */}
+                <div className={`h-2 bg-gradient-to-r ${update.color}`}></div>
+                
+                <div className="p-6">
+                  {/* Icon and Category */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${update.color} flex items-center justify-center text-white text-xl`}>
+                        {update.image}
+                      </div>
+                      <div>
+                        <span className="inline-block px-3 py-1 text-xs font-semibold text-gray-600 bg-gray-100 rounded-full capitalize">
+                          {update.category}
+                        </span>
+                        <p className="text-sm text-gray-500 mt-1">{update.readTime}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
-                  {update.title}
-                </h3>
-                
-                <p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
-                  {update.description}
-                </p>
+                  {/* Content */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
+                    {update.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                    {update.description}
+                  </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {update.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full border border-blue-100"
-                    >
-                      #{tag}
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {update.tags.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        className="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full border border-blue-100"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Date and Action */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-sm text-gray-500">
+                      {formatDate(update.date)}
                     </span>
-                  ))}
-                </div>
-
-                {/* Date and Action */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <span className="text-sm text-gray-500">
-                    {formatDate(update.date)}
-                  </span>
-                  <Link 
-                    to="/404" 
-                    className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform duration-300"
-                  >
-                    <span>Read More</span>
-                    <span>→</span>
-                  </Link>
+                    <Link 
+                      to="/404" 
+                      className="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform duration-300"
+                    >
+                      <span>Read More</span>
+                      <span>→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Load More Button */}
@@ -291,7 +368,11 @@ function Latest() {
         )}
 
         {/* Newsletter Section */}
-        <form onSubmit={handleSubscribe} className={`bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-8 text-center text-white mb-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <form 
+          ref={newsletterRef}
+          onSubmit={handleSubscribe} 
+          className="scroll-section bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-8 text-center text-white mb-12"
+        >
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated</h2>
           <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
             Get the latest IT solutions and technology updates delivered directly to your inbox.
@@ -303,15 +384,15 @@ function Latest() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              
+              disabled={isLoading}
               className="flex-1 px-4 py-3 rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-gray-900 disabled:opacity-50"
             />
             <button
               type="submit"
-              
+              disabled={isLoading}
               className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              Subscribe
+              {isLoading ? 'Subscribing...' : 'Subscribe'}
             </button>
           </div>
           {message.text && (
@@ -324,7 +405,10 @@ function Latest() {
         </form>
 
         {/* Quick Links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div 
+          ref={linksRef}
+          className="scroll-section grid grid-cols-1 md:grid-cols-3 gap-6 text-center"
+        >
           {[
             {
               title: "Documentation",
@@ -359,7 +443,20 @@ function Latest() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx global>{`
+        /* Scroll Animation Classes */
+        .scroll-section {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-section.scroll-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        /* Fade In Up Animation */
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -370,31 +467,81 @@ function Latest() {
             transform: translateY(0);
           }
         }
+        
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        
         .animate-fadeIn {
           animation: fadeIn 0.5s ease-out;
         }
+        
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+          opacity: 0;
+        }
+        
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
+        
         .line-clamp-3 {
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
+        
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+        
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
+        }
+        
+        /* Smooth Scroll for the whole page */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Section Transitions */
+        section {
+          transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        /* Card Hover Effects */
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Smooth Button Hover */
+        .smooth-hover {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Loading Animation */
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+        
+        .animate-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
     </div>

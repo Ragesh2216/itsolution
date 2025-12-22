@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const toggleHomeDropdown = () => setIsHomeDropdownOpen(!isHomeDropdownOpen);
   const closeHomeDropdown = () => setIsHomeDropdownOpen(false);
-   const handleLogoClick = () => {
+  const handleLogoClick = () => {
     closeMenu(); // Close menu when logo is clicked
   };
 
@@ -31,13 +31,20 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="bg-gradient-to-r from-[#a09df6] to-[#a09df6] fixed top-0 left-0 w-full shadow-md z-[999]">
+    <header className="bg-gradient-to-r from-[#e0e7ff] to-[#c7d2fe] fixed top-0 left-0 w-full shadow-md z-[999]">
+      {/* You can choose from these light color options: */}
+      {/* Option 1: Light lavender (current) - from-[#e0e7ff] to-[#c7d2fe] */}
+      {/* Option 2: Light blue - from-[#dbeafe] to-[#bfdbfe] */}
+      {/* Option 3: Light purple - from-[#f3e8ff] to-[#e9d5ff] */}
+      {/* Option 4: Light gray - from-[#f8fafc] to-[#f1f5f9] */}
+      {/* Option 5: Very light violet - from-[#f5f3ff] to-[#ede9fe] */}
+      
       <nav
         ref={navRef}
         className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-7xl mx-auto relative"
       >
-       {/* Logo - Added onClick handler */}
-       <div className="z-50">
+        {/* Logo - Added onClick handler */}
+        <div className="z-50">
           <Link 
             to="/" 
             onClick={handleLogoClick}
@@ -104,12 +111,12 @@ const Navbar = () => {
                   closeHomeDropdown();
                   closeMenu();
                 }}
-                 className="flex items-center justify-center lg:justify-start lg:mr-4"> 
+                className="flex items-center justify-center lg:justify-start lg:mr-4"> 
                 Home
               </Link>
               <button
                 onClick={toggleHomeDropdown}
-                className="p-2 hover:bg-gray-100 lg:hover:bg-white/20 rounded-lg transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 lg:hover:bg-white/30 rounded-lg transition-colors duration-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +170,7 @@ const Navbar = () => {
             <Link
               to="/dashboards"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/30 hover:text-purple-700 w-full"
             >
               Dashboard
             </Link>
@@ -173,7 +180,7 @@ const Navbar = () => {
             <Link
               to="/subscription"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/30 hover:text-purple-700 w-full"
             >
               Subscription
             </Link>
@@ -183,7 +190,7 @@ const Navbar = () => {
             <Link
               to="/about"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/30 hover:text-purple-700 w-full"
             >
               About
             </Link>
@@ -193,7 +200,7 @@ const Navbar = () => {
             <Link
               to="/services"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/30 hover:text-purple-700 w-full"
             >
               Services
             </Link>
@@ -203,7 +210,7 @@ const Navbar = () => {
             <Link
               to="/contact"
               onClick={closeMenu}
-              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/20 hover:text-purple-700 w-full"
+              className="block text-center lg:text-left py-2 px-4 rounded-lg hover:bg-gray-100 lg:hover:bg-white/30 hover:text-purple-700 w-full"
             >
               Contact
             </Link>
@@ -213,7 +220,7 @@ const Navbar = () => {
             <Link
               to="/login"
               onClick={closeMenu}
-              className="block text-center lg:text-left bg-white text-purple-700 hover:bg-gray-100 hover:text-purple-800 transition-colors duration-200 py-2 px-6 rounded-lg font-semibold w-full lg:w-auto"
+              className="block text-center lg:text-left bg-white text-purple-700 hover:bg-gray-100 hover:text-purple-800 transition-colors duration-200 py-2 px-6 rounded-lg font-semibold w-full lg:w-auto shadow-sm"
             >
               Login
             </Link>
@@ -223,5 +230,5 @@ const Navbar = () => {
     </header>
   );
 };
- 
+
 export default Navbar;
