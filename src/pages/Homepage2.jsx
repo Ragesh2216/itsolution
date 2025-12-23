@@ -7,8 +7,9 @@ const Homepage2 = () => {
     return (
         <>
             <div>
-                <Latest />
-                <ExploreServices />
+                 <ExploreServices />
+                
+               
             </div>
         </>
     );
