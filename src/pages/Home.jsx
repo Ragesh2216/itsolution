@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import yuva from '../images/www.webp';
-import sakthi from '../images/soe.webp';
-import dhara from '../images/ceo.webp';
+import yuva from '../images/photojournalism.webp';
+import sakthi from '../images/training.webp';
+import dhara from '../images/editorial.webp';
 import mani  from '../images/pr.webp';  
 import digital from '../images/digitalstory.webp';
 import broad from '../images/broadcast.webp';
@@ -140,7 +140,7 @@ const Home = () => {
       date: '31 July',
       author: 'admin',
       comments: '2 Comments',
-      title: 'Consulted admitting is power acuteness.',
+      title: 'Consulted admitting is power of  acuteness.',
       description: 'Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described dejection incommode.'
     },
     {
